@@ -131,8 +131,8 @@ func WithClient(client HTTPClient) SDKOption {
 func New(opts ...SDKOption) *AirbyteTest {
 	sdk := &AirbyteTest{
 		_language:   "go",
-		_sdkVersion: "1.0.0",
-		_genVersion: "2.26.3",
+		_sdkVersion: "1.1.0",
+		_genVersion: "2.28.0",
 	}
 	for _, opt := range opts {
 		opt(sdk)

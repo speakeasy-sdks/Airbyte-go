@@ -4,7 +4,7 @@
 ## SDK Installation
 
 ```bash
-go get github.com/speakeasy-sdks/Airbyte-go
+go get github.com/speakeasy-sdks/airbyte-oss-go
 ```
 <!-- End SDK Installation -->
 
