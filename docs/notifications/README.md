@@ -29,7 +29,7 @@ func main() {
             "explicabo": "impedit",
             "aliquid": "quis",
         },
-        NotificationType: shared.NotificationTypeEnumCustomerio,
+        NotificationType: shared.NotificationTypeCustomerio,
         SendOnFailure: false,
         SendOnSuccess: false,
         SlackConfiguration: &shared.SlackNotificationConfiguration{

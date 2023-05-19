@@ -228,8 +228,8 @@ func main() {
     ctx := context.Background()
     res, err := s.Jobs.ListJobsFor(ctx, shared.JobListRequestBody{
         ConfigID: "earum",
-        ConfigTypes: []shared.JobConfigTypeEnum{
-            shared.JobConfigTypeEnumResetConnection,
+        ConfigTypes: []shared.JobConfigType{
+            shared.JobConfigTypeResetConnection,
         },
         IncludingJobID: airbytetest.Int64(263346),
         Pagination: &shared.Pagination{

@@ -5,7 +5,7 @@ package shared
 // WorkspaceUpdate - Used to apply a patch-style update to a workspace, which means that null properties remain unchanged
 type WorkspaceUpdate struct {
 	AnonymousDataCollection *bool                `json:"anonymousDataCollection,omitempty"`
-	DefaultGeography        *GeographyEnum       `json:"defaultGeography,omitempty"`
+	DefaultGeography        *Geography           `json:"defaultGeography,omitempty"`
 	DisplaySetupWizard      *bool                `json:"displaySetupWizard,omitempty"`
 	Email                   *string              `json:"email,omitempty"`
 	InitialSetupComplete    *bool                `json:"initialSetupComplete,omitempty"`

@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type DestinationAuthSpecificationAuthTypeEnum string
+type DestinationAuthSpecificationAuthType string
 
 const (
-	DestinationAuthSpecificationAuthTypeEnumOauth20 DestinationAuthSpecificationAuthTypeEnum = "oauth2.0"
+	DestinationAuthSpecificationAuthTypeOauth20 DestinationAuthSpecificationAuthType = "oauth2.0"
 )
 
-func (e DestinationAuthSpecificationAuthTypeEnum) ToPointer() *DestinationAuthSpecificationAuthTypeEnum {
+func (e DestinationAuthSpecificationAuthType) ToPointer() *DestinationAuthSpecificationAuthType {
 	return &e
 }
 
-func (e *DestinationAuthSpecificationAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationAuthSpecificationAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = DestinationAuthSpecificationAuthTypeEnum(v)
+		*e = DestinationAuthSpecificationAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAuthSpecificationAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationAuthSpecificationAuthType: %v", v)
 	}
 }
 
 type DestinationAuthSpecification struct {
-	AuthType *DestinationAuthSpecificationAuthTypeEnum `json:"auth_type,omitempty"`
+	AuthType *DestinationAuthSpecificationAuthType `json:"auth_type,omitempty"`
 	// An object containing any metadata needed to describe this connector's Oauth flow
 	Oauth2Specification *OAuth2Specification `json:"oauth2Specification,omitempty"`
 }

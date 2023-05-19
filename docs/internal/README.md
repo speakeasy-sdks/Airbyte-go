@@ -78,7 +78,7 @@ func main() {
                 "a": "animi",
                 "maiores": "itaque",
             },
-            StateType: shared.ConnectionStateTypeEnumNotSet,
+            StateType: shared.ConnectionStateTypeNotSet,
             StreamState: []shared.StreamState{
                 shared.StreamState{
                     StreamDescriptor: shared.StreamDescriptor{
@@ -276,7 +276,7 @@ func main() {
                     "non": "voluptates",
                     "ad": "aliquam",
                 },
-                StateType: shared.ConnectionStateTypeEnumNotSet,
+                StateType: shared.ConnectionStateTypeNotSet,
                 StreamState: []shared.StreamState{
                     shared.StreamState{
                         StreamDescriptor: shared.StreamDescriptor{
@@ -388,7 +388,7 @@ func main() {
                             "iste",
                             "ullam",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumAppendDedup,
+                        DestinationSyncMode: shared.DestinationSyncModeAppendDedup,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -417,7 +417,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumIncremental,
+                        SyncMode: shared.SyncModeIncremental,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -453,8 +453,8 @@ func main() {
                                 "iusto",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumIncremental,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeIncremental,
                         },
                     },
                 },
@@ -464,7 +464,7 @@ func main() {
                         CursorField: []string{
                             "rerum",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumAppend,
+                        DestinationSyncMode: shared.DestinationSyncModeAppend,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -490,7 +490,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumIncremental,
+                        SyncMode: shared.SyncModeIncremental,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -520,9 +520,9 @@ func main() {
                                 "eum",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumFullRefresh,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeIncremental,
+                            shared.SyncModeFullRefresh,
                         },
                     },
                 },

@@ -7,21 +7,21 @@ import (
 	"fmt"
 )
 
-type ConnectionScheduleTimeUnitEnum string
+type ConnectionScheduleTimeUnit string
 
 const (
-	ConnectionScheduleTimeUnitEnumMinutes ConnectionScheduleTimeUnitEnum = "minutes"
-	ConnectionScheduleTimeUnitEnumHours   ConnectionScheduleTimeUnitEnum = "hours"
-	ConnectionScheduleTimeUnitEnumDays    ConnectionScheduleTimeUnitEnum = "days"
-	ConnectionScheduleTimeUnitEnumWeeks   ConnectionScheduleTimeUnitEnum = "weeks"
-	ConnectionScheduleTimeUnitEnumMonths  ConnectionScheduleTimeUnitEnum = "months"
+	ConnectionScheduleTimeUnitMinutes ConnectionScheduleTimeUnit = "minutes"
+	ConnectionScheduleTimeUnitHours   ConnectionScheduleTimeUnit = "hours"
+	ConnectionScheduleTimeUnitDays    ConnectionScheduleTimeUnit = "days"
+	ConnectionScheduleTimeUnitWeeks   ConnectionScheduleTimeUnit = "weeks"
+	ConnectionScheduleTimeUnitMonths  ConnectionScheduleTimeUnit = "months"
 )
 
-func (e ConnectionScheduleTimeUnitEnum) ToPointer() *ConnectionScheduleTimeUnitEnum {
+func (e ConnectionScheduleTimeUnit) ToPointer() *ConnectionScheduleTimeUnit {
 	return &e
 }
 
-func (e *ConnectionScheduleTimeUnitEnum) UnmarshalJSON(data []byte) error {
+func (e *ConnectionScheduleTimeUnit) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -36,15 +36,15 @@ func (e *ConnectionScheduleTimeUnitEnum) UnmarshalJSON(data []byte) error {
 	case "weeks":
 		fallthrough
 	case "months":
-		*e = ConnectionScheduleTimeUnitEnum(v)
+		*e = ConnectionScheduleTimeUnit(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ConnectionScheduleTimeUnitEnum: %v", v)
+		return fmt.Errorf("invalid value for ConnectionScheduleTimeUnit: %v", v)
 	}
 }
 
 // ConnectionSchedule - if null, then no schedule is set.
 type ConnectionSchedule struct {
-	TimeUnit ConnectionScheduleTimeUnitEnum `json:"timeUnit"`
-	Units    int64                          `json:"units"`
+	TimeUnit ConnectionScheduleTimeUnit `json:"timeUnit"`
+	Units    int64                      `json:"units"`
 }

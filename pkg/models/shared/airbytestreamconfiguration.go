@@ -7,8 +7,8 @@ type AirbyteStreamConfiguration struct {
 	// Alias name to the stream to be used in the destination
 	AliasName *string `json:"aliasName,omitempty"`
 	// Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if `sync_mode` is `incremental`. Otherwise it is ignored.
-	CursorField         []string                `json:"cursorField,omitempty"`
-	DestinationSyncMode DestinationSyncModeEnum `json:"destinationSyncMode"`
+	CursorField         []string            `json:"cursorField,omitempty"`
+	DestinationSyncMode DestinationSyncMode `json:"destinationSyncMode"`
 	// Whether field selection should be enabled. If this is true, only the properties in `selectedFields` will be included.
 	FieldSelectionEnabled *bool `json:"fieldSelectionEnabled,omitempty"`
 	// Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup`. Otherwise it is ignored.
@@ -18,6 +18,6 @@ type AirbyteStreamConfiguration struct {
 	// Paths to the fields that will be included in the configured catalog. This must be set if `fieldSelectedEnabled` is set. An empty list indicates that no properties will be included.
 	SelectedFields []SelectedFieldInfo `json:"selectedFields,omitempty"`
 	// Does the connector suggest that this stream be enabled by default?
-	Suggested *bool        `json:"suggested,omitempty"`
-	SyncMode  SyncModeEnum `json:"syncMode"`
+	Suggested *bool    `json:"suggested,omitempty"`
+	SyncMode  SyncMode `json:"syncMode"`
 }

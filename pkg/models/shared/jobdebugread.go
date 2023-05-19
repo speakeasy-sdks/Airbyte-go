@@ -5,9 +5,9 @@ package shared
 type JobDebugRead struct {
 	AirbyteVersion        string                    `json:"airbyteVersion"`
 	ConfigID              string                    `json:"configId"`
-	ConfigType            JobConfigTypeEnum         `json:"configType"`
+	ConfigType            JobConfigType             `json:"configType"`
 	DestinationDefinition DestinationDefinitionRead `json:"destinationDefinition"`
 	ID                    int64                     `json:"id"`
 	SourceDefinition      SourceDefinitionRead      `json:"sourceDefinition"`
-	Status                JobStatusEnum             `json:"status"`
+	Status                JobStatus                 `json:"status"`
 }

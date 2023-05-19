@@ -8,15 +8,15 @@ type WebBackendConnectionListItem struct {
 	Destination  DestinationSnippetRead `json:"destination"`
 	IsSyncing    bool                   `json:"isSyncing"`
 	// epoch time of the latest sync job. null if no sync job has taken place.
-	LatestSyncJobCreatedAt *int64         `json:"latestSyncJobCreatedAt,omitempty"`
-	LatestSyncJobStatus    *JobStatusEnum `json:"latestSyncJobStatus,omitempty"`
-	Name                   string         `json:"name"`
+	LatestSyncJobCreatedAt *int64     `json:"latestSyncJobCreatedAt,omitempty"`
+	LatestSyncJobStatus    *JobStatus `json:"latestSyncJobStatus,omitempty"`
+	Name                   string     `json:"name"`
 	// schedule for when the the connection should run, per the schedule type
 	ScheduleData *ConnectionScheduleData `json:"scheduleData,omitempty"`
 	// determine how the schedule data should be interpreted
-	ScheduleType *ConnectionScheduleTypeEnum `json:"scheduleType,omitempty"`
-	SchemaChange SchemaChangeEnum            `json:"schemaChange"`
-	Source       SourceSnippetRead           `json:"source"`
+	ScheduleType *ConnectionScheduleType `json:"scheduleType,omitempty"`
+	SchemaChange SchemaChange            `json:"schemaChange"`
+	Source       SourceSnippetRead       `json:"source"`
 	// Active means that data is flowing through the connection. Inactive means it is not. Deprecated means the connection is off and cannot be re-activated. the schema field describes the elements of the schema that will be synced.
-	Status ConnectionStatusEnum `json:"status"`
+	Status ConnectionStatus `json:"status"`
 }

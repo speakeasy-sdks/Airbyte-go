@@ -3,13 +3,13 @@
 package shared
 
 type JobRead struct {
-	ConfigID   string            `json:"configId"`
-	ConfigType JobConfigTypeEnum `json:"configType"`
-	CreatedAt  int64             `json:"createdAt"`
-	ID         int64             `json:"id"`
+	ConfigID   string        `json:"configId"`
+	ConfigType JobConfigType `json:"configType"`
+	CreatedAt  int64         `json:"createdAt"`
+	ID         int64         `json:"id"`
 	// contains information about how a reset was configured. only populated if the job was a reset.
-	ResetConfig *ResetConfig  `json:"resetConfig,omitempty"`
-	StartedAt   *int64        `json:"startedAt,omitempty"`
-	Status      JobStatusEnum `json:"status"`
-	UpdatedAt   int64         `json:"updatedAt"`
+	ResetConfig *ResetConfig `json:"resetConfig,omitempty"`
+	StartedAt   *int64       `json:"startedAt,omitempty"`
+	Status      JobStatus    `json:"status"`
+	UpdatedAt   int64        `json:"updatedAt"`
 }

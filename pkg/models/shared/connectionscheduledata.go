@@ -7,21 +7,21 @@ import (
 	"fmt"
 )
 
-type ConnectionScheduleDataBasicScheduleTimeUnitEnum string
+type ConnectionScheduleDataBasicScheduleTimeUnit string
 
 const (
-	ConnectionScheduleDataBasicScheduleTimeUnitEnumMinutes ConnectionScheduleDataBasicScheduleTimeUnitEnum = "minutes"
-	ConnectionScheduleDataBasicScheduleTimeUnitEnumHours   ConnectionScheduleDataBasicScheduleTimeUnitEnum = "hours"
-	ConnectionScheduleDataBasicScheduleTimeUnitEnumDays    ConnectionScheduleDataBasicScheduleTimeUnitEnum = "days"
-	ConnectionScheduleDataBasicScheduleTimeUnitEnumWeeks   ConnectionScheduleDataBasicScheduleTimeUnitEnum = "weeks"
-	ConnectionScheduleDataBasicScheduleTimeUnitEnumMonths  ConnectionScheduleDataBasicScheduleTimeUnitEnum = "months"
+	ConnectionScheduleDataBasicScheduleTimeUnitMinutes ConnectionScheduleDataBasicScheduleTimeUnit = "minutes"
+	ConnectionScheduleDataBasicScheduleTimeUnitHours   ConnectionScheduleDataBasicScheduleTimeUnit = "hours"
+	ConnectionScheduleDataBasicScheduleTimeUnitDays    ConnectionScheduleDataBasicScheduleTimeUnit = "days"
+	ConnectionScheduleDataBasicScheduleTimeUnitWeeks   ConnectionScheduleDataBasicScheduleTimeUnit = "weeks"
+	ConnectionScheduleDataBasicScheduleTimeUnitMonths  ConnectionScheduleDataBasicScheduleTimeUnit = "months"
 )
 
-func (e ConnectionScheduleDataBasicScheduleTimeUnitEnum) ToPointer() *ConnectionScheduleDataBasicScheduleTimeUnitEnum {
+func (e ConnectionScheduleDataBasicScheduleTimeUnit) ToPointer() *ConnectionScheduleDataBasicScheduleTimeUnit {
 	return &e
 }
 
-func (e *ConnectionScheduleDataBasicScheduleTimeUnitEnum) UnmarshalJSON(data []byte) error {
+func (e *ConnectionScheduleDataBasicScheduleTimeUnit) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -36,16 +36,16 @@ func (e *ConnectionScheduleDataBasicScheduleTimeUnitEnum) UnmarshalJSON(data []b
 	case "weeks":
 		fallthrough
 	case "months":
-		*e = ConnectionScheduleDataBasicScheduleTimeUnitEnum(v)
+		*e = ConnectionScheduleDataBasicScheduleTimeUnit(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ConnectionScheduleDataBasicScheduleTimeUnitEnum: %v", v)
+		return fmt.Errorf("invalid value for ConnectionScheduleDataBasicScheduleTimeUnit: %v", v)
 	}
 }
 
 type ConnectionScheduleDataBasicSchedule struct {
-	TimeUnit ConnectionScheduleDataBasicScheduleTimeUnitEnum `json:"timeUnit"`
-	Units    int64                                           `json:"units"`
+	TimeUnit ConnectionScheduleDataBasicScheduleTimeUnit `json:"timeUnit"`
+	Units    int64                                       `json:"units"`
 }
 
 type ConnectionScheduleDataCron struct {

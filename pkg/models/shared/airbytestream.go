@@ -15,6 +15,6 @@ type AirbyteStream struct {
 	// If the source defines the cursor field, then any other cursor field inputs will be ignored. If it does not, either the user_provided one is used, or the default one is used as a backup.
 	SourceDefinedCursor *bool `json:"sourceDefinedCursor,omitempty"`
 	// If the source defines the primary key, paths to the fields that will be used as a primary key. If not provided by the source, the end user will have to specify the primary key themselves.
-	SourceDefinedPrimaryKey [][]string     `json:"sourceDefinedPrimaryKey,omitempty"`
-	SupportedSyncModes      []SyncModeEnum `json:"supportedSyncModes,omitempty"`
+	SourceDefinedPrimaryKey [][]string `json:"sourceDefinedPrimaryKey,omitempty"`
+	SupportedSyncModes      []SyncMode `json:"supportedSyncModes,omitempty"`
 }

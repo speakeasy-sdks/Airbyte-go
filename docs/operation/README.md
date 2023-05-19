@@ -37,9 +37,9 @@ func main() {
             GitRepoURL: "praesentium",
         },
         Normalization: &shared.OperatorNormalization{
-            Option: shared.OperatorNormalizationOptionEnumBasic.ToPointer(),
+            Option: shared.OperatorNormalizationOptionBasic.ToPointer(),
         },
-        OperatorType: shared.OperatorTypeEnumWebhook,
+        OperatorType: shared.OperatorTypeWebhook,
         Webhook: &shared.OperatorWebhook{
             DbtCloud: &shared.OperatorWebhookDbtCloud{
                 AccountID: 221781,
@@ -48,7 +48,7 @@ func main() {
             ExecutionBody: airbytetest.String("libero"),
             ExecutionURL: airbytetest.String("iste"),
             WebhookConfigID: airbytetest.String("1c8d975e-0e84-419d-8f84-f144f3e07edc"),
-            WebhookType: shared.OperatorWebhookWebhookTypeEnumDbtCloud.ToPointer(),
+            WebhookType: shared.OperatorWebhookWebhookTypeDbtCloud.ToPointer(),
         },
     })
     if err != nil {
@@ -91,9 +91,9 @@ func main() {
                 GitRepoURL: "laborum",
             },
             Normalization: &shared.OperatorNormalization{
-                Option: shared.OperatorNormalizationOptionEnumBasic.ToPointer(),
+                Option: shared.OperatorNormalizationOptionBasic.ToPointer(),
             },
-            OperatorType: shared.OperatorTypeEnumWebhook,
+            OperatorType: shared.OperatorTypeWebhook,
             Webhook: &shared.OperatorWebhook{
                 DbtCloud: &shared.OperatorWebhookDbtCloud{
                     AccountID: 842974,
@@ -102,7 +102,7 @@ func main() {
                 ExecutionBody: airbytetest.String("aut"),
                 ExecutionURL: airbytetest.String("ipsam"),
                 WebhookConfigID: airbytetest.String("a972e056-7282-427b-ad30-9470bf7a4fa8"),
-                WebhookType: shared.OperatorWebhookWebhookTypeEnumDbtCloud.ToPointer(),
+                WebhookType: shared.OperatorWebhookWebhookTypeDbtCloud.ToPointer(),
             },
         },
         WorkspaceID: "7cf535a6-fae5-44eb-b60c-321f023b75d2",
@@ -247,9 +247,9 @@ func main() {
                 GitRepoURL: "corporis",
             },
             Normalization: &shared.OperatorNormalization{
-                Option: shared.OperatorNormalizationOptionEnumBasic.ToPointer(),
+                Option: shared.OperatorNormalizationOptionBasic.ToPointer(),
             },
-            OperatorType: shared.OperatorTypeEnumDbt,
+            OperatorType: shared.OperatorTypeDbt,
             Webhook: &shared.OperatorWebhook{
                 DbtCloud: &shared.OperatorWebhookDbtCloud{
                     AccountID: 435142,
@@ -258,7 +258,7 @@ func main() {
                 ExecutionBody: airbytetest.String("provident"),
                 ExecutionURL: airbytetest.String("laudantium"),
                 WebhookConfigID: airbytetest.String("b5555408-0d40-4bca-8c6c-bd6b5f3ec909"),
-                WebhookType: shared.OperatorWebhookWebhookTypeEnumDbtCloud.ToPointer(),
+                WebhookType: shared.OperatorWebhookWebhookTypeDbtCloud.ToPointer(),
             },
         },
     })

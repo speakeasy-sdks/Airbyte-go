@@ -432,7 +432,7 @@ func main() {
                             "eos",
                             "dolorem",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumAppendDedup,
+                        DestinationSyncMode: shared.DestinationSyncModeAppendDedup,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -480,7 +480,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumIncremental,
+                        SyncMode: shared.SyncModeIncremental,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -505,10 +505,10 @@ func main() {
                                 "dolor",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumFullRefresh,
-                            shared.SyncModeEnumFullRefresh,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeIncremental,
+                            shared.SyncModeFullRefresh,
+                            shared.SyncModeFullRefresh,
                         },
                     },
                 },
@@ -519,7 +519,7 @@ func main() {
                             "commodi",
                             "ipsam",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumOverwrite,
+                        DestinationSyncMode: shared.DestinationSyncModeOverwrite,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -552,7 +552,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumIncremental,
+                        SyncMode: shared.SyncModeIncremental,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -575,9 +575,9 @@ func main() {
                                 "suscipit",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumIncremental,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeIncremental,
+                            shared.SyncModeIncremental,
                         },
                     },
                 },
@@ -589,7 +589,7 @@ func main() {
                             "deserunt",
                             "fugit",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumOverwrite,
+                        DestinationSyncMode: shared.DestinationSyncModeOverwrite,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -640,7 +640,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumFullRefresh,
+                        SyncMode: shared.SyncModeFullRefresh,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -666,8 +666,8 @@ func main() {
                                 "voluptas",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumIncremental,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeIncremental,
                         },
                     },
                 },

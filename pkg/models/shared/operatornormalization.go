@@ -7,30 +7,30 @@ import (
 	"fmt"
 )
 
-type OperatorNormalizationOptionEnum string
+type OperatorNormalizationOption string
 
 const (
-	OperatorNormalizationOptionEnumBasic OperatorNormalizationOptionEnum = "basic"
+	OperatorNormalizationOptionBasic OperatorNormalizationOption = "basic"
 )
 
-func (e OperatorNormalizationOptionEnum) ToPointer() *OperatorNormalizationOptionEnum {
+func (e OperatorNormalizationOption) ToPointer() *OperatorNormalizationOption {
 	return &e
 }
 
-func (e *OperatorNormalizationOptionEnum) UnmarshalJSON(data []byte) error {
+func (e *OperatorNormalizationOption) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "basic":
-		*e = OperatorNormalizationOptionEnum(v)
+		*e = OperatorNormalizationOption(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for OperatorNormalizationOptionEnum: %v", v)
+		return fmt.Errorf("invalid value for OperatorNormalizationOption: %v", v)
 	}
 }
 
 type OperatorNormalization struct {
-	Option *OperatorNormalizationOptionEnum `json:"option,omitempty"`
+	Option *OperatorNormalizationOption `json:"option,omitempty"`
 }

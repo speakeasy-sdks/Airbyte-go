@@ -7,18 +7,18 @@ import (
 	"fmt"
 )
 
-type SyncModeEnum string
+type SyncMode string
 
 const (
-	SyncModeEnumFullRefresh SyncModeEnum = "full_refresh"
-	SyncModeEnumIncremental SyncModeEnum = "incremental"
+	SyncModeFullRefresh SyncMode = "full_refresh"
+	SyncModeIncremental SyncMode = "incremental"
 )
 
-func (e SyncModeEnum) ToPointer() *SyncModeEnum {
+func (e SyncMode) ToPointer() *SyncMode {
 	return &e
 }
 
-func (e *SyncModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SyncMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -27,9 +27,9 @@ func (e *SyncModeEnum) UnmarshalJSON(data []byte) error {
 	case "full_refresh":
 		fallthrough
 	case "incremental":
-		*e = SyncModeEnum(v)
+		*e = SyncMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SyncModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SyncMode: %v", v)
 	}
 }

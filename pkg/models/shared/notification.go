@@ -4,7 +4,7 @@ package shared
 
 type Notification struct {
 	CustomerioConfiguration map[string]interface{}          `json:"customerioConfiguration,omitempty"`
-	NotificationType        NotificationTypeEnum            `json:"notificationType"`
+	NotificationType        NotificationType                `json:"notificationType"`
 	SendOnFailure           bool                            `json:"sendOnFailure"`
 	SendOnSuccess           bool                            `json:"sendOnSuccess"`
 	SlackConfiguration      *SlackNotificationConfiguration `json:"slackConfiguration,omitempty"`

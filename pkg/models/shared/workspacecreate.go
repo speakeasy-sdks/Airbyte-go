@@ -4,7 +4,7 @@ package shared
 
 type WorkspaceCreate struct {
 	AnonymousDataCollection *bool                `json:"anonymousDataCollection,omitempty"`
-	DefaultGeography        *GeographyEnum       `json:"defaultGeography,omitempty"`
+	DefaultGeography        *Geography           `json:"defaultGeography,omitempty"`
 	DisplaySetupWizard      *bool                `json:"displaySetupWizard,omitempty"`
 	Email                   *string              `json:"email,omitempty"`
 	Name                    string               `json:"name"`

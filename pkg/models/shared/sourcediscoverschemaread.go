@@ -11,6 +11,6 @@ type SourceDiscoverSchemaRead struct {
 	CatalogDiff *CatalogDiff `json:"catalogDiff,omitempty"`
 	CatalogID   *string      `json:"catalogId,omitempty"`
 	// Active means that data is flowing through the connection. Inactive means it is not. Deprecated means the connection is off and cannot be re-activated. the schema field describes the elements of the schema that will be synced.
-	ConnectionStatus *ConnectionStatusEnum `json:"connectionStatus,omitempty"`
-	JobInfo          SynchronousJobRead    `json:"jobInfo"`
+	ConnectionStatus *ConnectionStatus  `json:"connectionStatus,omitempty"`
+	JobInfo          SynchronousJobRead `json:"jobInfo"`
 }

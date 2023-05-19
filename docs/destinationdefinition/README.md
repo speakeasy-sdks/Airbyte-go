@@ -54,7 +54,7 @@ func main() {
                 },
                 JobSpecific: []shared.JobTypeResourceLimit{
                     shared.JobTypeResourceLimit{
-                        JobType: shared.JobTypeEnumResetConnection,
+                        JobType: shared.JobTypeResetConnection,
                         ResourceRequirements: shared.ResourceRequirements{
                             CPULimit: airbytetest.String("quis"),
                             CPURequest: airbytetest.String("beatae"),
@@ -63,7 +63,7 @@ func main() {
                         },
                     },
                     shared.JobTypeResourceLimit{
-                        JobType: shared.JobTypeEnumReplicate,
+                        JobType: shared.JobTypeReplicate,
                         ResourceRequirements: shared.ResourceRequirements{
                             CPULimit: airbytetest.String("cupiditate"),
                             CPURequest: airbytetest.String("fugit"),
@@ -412,7 +412,7 @@ func main() {
             },
             JobSpecific: []shared.JobTypeResourceLimit{
                 shared.JobTypeResourceLimit{
-                    JobType: shared.JobTypeEnumReplicate,
+                    JobType: shared.JobTypeReplicate,
                     ResourceRequirements: shared.ResourceRequirements{
                         CPULimit: airbytetest.String("minus"),
                         CPURequest: airbytetest.String("sunt"),
@@ -421,7 +421,7 @@ func main() {
                     },
                 },
                 shared.JobTypeResourceLimit{
-                    JobType: shared.JobTypeEnumSync,
+                    JobType: shared.JobTypeSync,
                     ResourceRequirements: shared.ResourceRequirements{
                         CPULimit: airbytetest.String("et"),
                         CPURequest: airbytetest.String("facilis"),

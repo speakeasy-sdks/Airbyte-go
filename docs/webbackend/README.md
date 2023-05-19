@@ -106,11 +106,11 @@ func main() {
     ctx := context.Background()
     res, err := s.WebBackend.WebBackendCreateConnection(ctx, shared.WebBackendConnectionCreate{
         DestinationID: "cd5fbcf7-9da1-48a7-822b-f95894e6861a",
-        Geography: shared.GeographyEnumEu.ToPointer(),
+        Geography: shared.GeographyEu.ToPointer(),
         Name: airbytetest.String("Pedro Haley"),
-        NamespaceDefinition: shared.NamespaceDefinitionTypeEnumCustomformat.ToPointer(),
+        NamespaceDefinition: shared.NamespaceDefinitionTypeCustomformat.ToPointer(),
         NamespaceFormat: airbytetest.String("${SOURCE_NAMESPACE}"),
-        NonBreakingChangesPreference: shared.NonBreakingChangesPreferenceEnumIgnore.ToPointer(),
+        NonBreakingChangesPreference: shared.NonBreakingChangesPreferenceIgnore.ToPointer(),
         OperationIds: []string{
             "751c9fe8-f750-42bf-9c34-50841f176445",
             "6379f3fb-27e2-41f8-a265-7b36fc6b9f58",
@@ -128,9 +128,9 @@ func main() {
                         GitRepoURL: "aut",
                     },
                     Normalization: &shared.OperatorNormalization{
-                        Option: shared.OperatorNormalizationOptionEnumBasic.ToPointer(),
+                        Option: shared.OperatorNormalizationOptionBasic.ToPointer(),
                     },
-                    OperatorType: shared.OperatorTypeEnumNormalization,
+                    OperatorType: shared.OperatorTypeNormalization,
                     Webhook: &shared.OperatorWebhook{
                         DbtCloud: &shared.OperatorWebhookDbtCloud{
                             AccountID: 611485,
@@ -139,7 +139,7 @@ func main() {
                         ExecutionBody: airbytetest.String("repellat"),
                         ExecutionURL: airbytetest.String("voluptatum"),
                         WebhookConfigID: airbytetest.String("d29de1dd-7097-4b5d-a08c-57fa6c78a216"),
-                        WebhookType: shared.OperatorWebhookWebhookTypeEnumDbtCloud.ToPointer(),
+                        WebhookType: shared.OperatorWebhookWebhookTypeDbtCloud.ToPointer(),
                     },
                 },
                 WorkspaceID: "e19bafec-a619-4149-8140-b64ff8ae170e",
@@ -154,9 +154,9 @@ func main() {
                         GitRepoURL: "recusandae",
                     },
                     Normalization: &shared.OperatorNormalization{
-                        Option: shared.OperatorNormalizationOptionEnumBasic.ToPointer(),
+                        Option: shared.OperatorNormalizationOptionBasic.ToPointer(),
                     },
-                    OperatorType: shared.OperatorTypeEnumNormalization,
+                    OperatorType: shared.OperatorTypeNormalization,
                     Webhook: &shared.OperatorWebhook{
                         DbtCloud: &shared.OperatorWebhookDbtCloud{
                             AccountID: 652013,
@@ -165,7 +165,7 @@ func main() {
                         ExecutionBody: airbytetest.String("blanditiis"),
                         ExecutionURL: airbytetest.String("suscipit"),
                         WebhookConfigID: airbytetest.String("85559667-32aa-45dc-b668-2cb70f8cfd5f"),
-                        WebhookType: shared.OperatorWebhookWebhookTypeEnumDbtCloud.ToPointer(),
+                        WebhookType: shared.OperatorWebhookWebhookTypeDbtCloud.ToPointer(),
                     },
                 },
                 WorkspaceID: "b6e91b9a-9f74-4846-a2c3-309db0536d9e",
@@ -179,12 +179,12 @@ func main() {
             MemoryRequest: airbytetest.String("consequatur"),
         },
         Schedule: &shared.ConnectionSchedule{
-            TimeUnit: shared.ConnectionScheduleTimeUnitEnumMinutes,
+            TimeUnit: shared.ConnectionScheduleTimeUnitMinutes,
             Units: 434632,
         },
         ScheduleData: &shared.ConnectionScheduleData{
             BasicSchedule: &shared.ConnectionScheduleDataBasicSchedule{
-                TimeUnit: shared.ConnectionScheduleDataBasicScheduleTimeUnitEnumMonths,
+                TimeUnit: shared.ConnectionScheduleDataBasicScheduleTimeUnitMonths,
                 Units: 337581,
             },
             Cron: &shared.ConnectionScheduleDataCron{
@@ -192,10 +192,10 @@ func main() {
                 CronTimeZone: "omnis",
             },
         },
-        ScheduleType: shared.ConnectionScheduleTypeEnumManual.ToPointer(),
+        ScheduleType: shared.ConnectionScheduleTypeManual.ToPointer(),
         SourceCatalogID: airbytetest.String("c11a25a8-bf92-4f97-828a-d9a9f8bf8221"),
         SourceID: "125359d9-8387-4f7a-b9cd-72cd2484da21",
-        Status: shared.ConnectionStatusEnumInactive,
+        Status: shared.ConnectionStatusInactive,
         SyncCatalog: &shared.AirbyteCatalog{
             Streams: []shared.AirbyteStreamAndConfiguration{
                 shared.AirbyteStreamAndConfiguration{
@@ -207,7 +207,7 @@ func main() {
                             "eligendi",
                             "numquam",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumAppend,
+                        DestinationSyncMode: shared.DestinationSyncModeAppend,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -256,7 +256,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumIncremental,
+                        SyncMode: shared.SyncModeIncremental,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -279,8 +279,8 @@ func main() {
                                 "sed",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumIncremental,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeIncremental,
                         },
                     },
                 },
@@ -466,11 +466,11 @@ func main() {
     ctx := context.Background()
     res, err := s.WebBackend.WebBackendUpdateConnection(ctx, shared.WebBackendConnectionUpdate{
         ConnectionID: "c7abf616-ea5c-4716-8193-4b90f2e09d19",
-        Geography: shared.GeographyEnumEu.ToPointer(),
+        Geography: shared.GeographyEu.ToPointer(),
         Name: airbytetest.String("Dr. Lorene Runte"),
-        NamespaceDefinition: shared.NamespaceDefinitionTypeEnumCustomformat.ToPointer(),
+        NamespaceDefinition: shared.NamespaceDefinitionTypeCustomformat.ToPointer(),
         NamespaceFormat: airbytetest.String("${SOURCE_NAMESPACE}"),
-        NonBreakingChangesPreference: shared.NonBreakingChangesPreferenceEnumIgnore.ToPointer(),
+        NonBreakingChangesPreference: shared.NonBreakingChangesPreferenceIgnore.ToPointer(),
         NotifySchemaChanges: airbytetest.Bool(false),
         Operations: []shared.WebBackendOperationCreateOrUpdate{
             shared.WebBackendOperationCreateOrUpdate{
@@ -484,9 +484,9 @@ func main() {
                         GitRepoURL: "excepturi",
                     },
                     Normalization: &shared.OperatorNormalization{
-                        Option: shared.OperatorNormalizationOptionEnumBasic.ToPointer(),
+                        Option: shared.OperatorNormalizationOptionBasic.ToPointer(),
                     },
-                    OperatorType: shared.OperatorTypeEnumNormalization,
+                    OperatorType: shared.OperatorTypeNormalization,
                     Webhook: &shared.OperatorWebhook{
                         DbtCloud: &shared.OperatorWebhookDbtCloud{
                             AccountID: 139505,
@@ -495,7 +495,7 @@ func main() {
                         ExecutionBody: airbytetest.String("maxime"),
                         ExecutionURL: airbytetest.String("excepturi"),
                         WebhookConfigID: airbytetest.String("ff57491a-abfa-42e7-a1f0-ca4d456ef103"),
-                        WebhookType: shared.OperatorWebhookWebhookTypeEnumDbtCloud.ToPointer(),
+                        WebhookType: shared.OperatorWebhookWebhookTypeDbtCloud.ToPointer(),
                     },
                 },
                 WorkspaceID: "1e6899f0-c200-41e2-acd5-5cc0584a184d",
@@ -511,9 +511,9 @@ func main() {
                         GitRepoURL: "sed",
                     },
                     Normalization: &shared.OperatorNormalization{
-                        Option: shared.OperatorNormalizationOptionEnumBasic.ToPointer(),
+                        Option: shared.OperatorNormalizationOptionBasic.ToPointer(),
                     },
-                    OperatorType: shared.OperatorTypeEnumDbt,
+                    OperatorType: shared.OperatorTypeDbt,
                     Webhook: &shared.OperatorWebhook{
                         DbtCloud: &shared.OperatorWebhookDbtCloud{
                             AccountID: 803763,
@@ -522,7 +522,7 @@ func main() {
                         ExecutionBody: airbytetest.String("quibusdam"),
                         ExecutionURL: airbytetest.String("facere"),
                         WebhookConfigID: airbytetest.String("db46aa1c-fd6d-4828-9a01-319112964664"),
-                        WebhookType: shared.OperatorWebhookWebhookTypeEnumDbtCloud.ToPointer(),
+                        WebhookType: shared.OperatorWebhookWebhookTypeDbtCloud.ToPointer(),
                     },
                 },
                 WorkspaceID: "5c1d81f2-9042-4f56-9b7a-ff0ea2216cbe",
@@ -538,9 +538,9 @@ func main() {
                         GitRepoURL: "blanditiis",
                     },
                     Normalization: &shared.OperatorNormalization{
-                        Option: shared.OperatorNormalizationOptionEnumBasic.ToPointer(),
+                        Option: shared.OperatorNormalizationOptionBasic.ToPointer(),
                     },
-                    OperatorType: shared.OperatorTypeEnumNormalization,
+                    OperatorType: shared.OperatorTypeNormalization,
                     Webhook: &shared.OperatorWebhook{
                         DbtCloud: &shared.OperatorWebhookDbtCloud{
                             AccountID: 259019,
@@ -549,7 +549,7 @@ func main() {
                         ExecutionBody: airbytetest.String("nisi"),
                         ExecutionURL: airbytetest.String("placeat"),
                         WebhookConfigID: airbytetest.String("bdeecf6b-99bc-4635-a2eb-fdf55c294c06"),
-                        WebhookType: shared.OperatorWebhookWebhookTypeEnumDbtCloud.ToPointer(),
+                        WebhookType: shared.OperatorWebhookWebhookTypeDbtCloud.ToPointer(),
                     },
                 },
                 WorkspaceID: "0b06a128-7764-4eef-ad0c-6d6ed9c73dd6",
@@ -565,9 +565,9 @@ func main() {
                         GitRepoURL: "repellat",
                     },
                     Normalization: &shared.OperatorNormalization{
-                        Option: shared.OperatorNormalizationOptionEnumBasic.ToPointer(),
+                        Option: shared.OperatorNormalizationOptionBasic.ToPointer(),
                     },
-                    OperatorType: shared.OperatorTypeEnumDbt,
+                    OperatorType: shared.OperatorTypeDbt,
                     Webhook: &shared.OperatorWebhook{
                         DbtCloud: &shared.OperatorWebhookDbtCloud{
                             AccountID: 693988,
@@ -576,7 +576,7 @@ func main() {
                         ExecutionBody: airbytetest.String("molestiae"),
                         ExecutionURL: airbytetest.String("vitae"),
                         WebhookConfigID: airbytetest.String("9890f42a-4bb4-438d-85b2-60591d745e3c"),
-                        WebhookType: shared.OperatorWebhookWebhookTypeEnumDbtCloud.ToPointer(),
+                        WebhookType: shared.OperatorWebhookWebhookTypeDbtCloud.ToPointer(),
                     },
                 },
                 WorkspaceID: "2059c9c3-f567-4e0e-a527-65b1d62fcdac",
@@ -590,12 +590,12 @@ func main() {
             MemoryRequest: airbytetest.String("sunt"),
         },
         Schedule: &shared.ConnectionSchedule{
-            TimeUnit: shared.ConnectionScheduleTimeUnitEnumMinutes,
+            TimeUnit: shared.ConnectionScheduleTimeUnitMinutes,
             Units: 80673,
         },
         ScheduleData: &shared.ConnectionScheduleData{
             BasicSchedule: &shared.ConnectionScheduleDataBasicSchedule{
-                TimeUnit: shared.ConnectionScheduleDataBasicScheduleTimeUnitEnumHours,
+                TimeUnit: shared.ConnectionScheduleDataBasicScheduleTimeUnitHours,
                 Units: 799730,
             },
             Cron: &shared.ConnectionScheduleDataCron{
@@ -603,10 +603,10 @@ func main() {
                 CronTimeZone: "consequuntur",
             },
         },
-        ScheduleType: shared.ConnectionScheduleTypeEnumManual.ToPointer(),
+        ScheduleType: shared.ConnectionScheduleTypeManual.ToPointer(),
         SkipReset: airbytetest.Bool(false),
         SourceCatalogID: airbytetest.String("39e8f25c-d0d1-49d9-99f4-39e39266cbd9"),
-        Status: shared.ConnectionStatusEnumActive.ToPointer(),
+        Status: shared.ConnectionStatusActive.ToPointer(),
         SyncCatalog: &shared.AirbyteCatalog{
             Streams: []shared.AirbyteStreamAndConfiguration{
                 shared.AirbyteStreamAndConfiguration{
@@ -617,7 +617,7 @@ func main() {
                             "odit",
                             "rerum",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumAppend,
+                        DestinationSyncMode: shared.DestinationSyncModeAppend,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -653,7 +653,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumIncremental,
+                        SyncMode: shared.SyncModeIncremental,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -676,10 +676,10 @@ func main() {
                                 "adipisci",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumIncremental,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeIncremental,
+                            shared.SyncModeIncremental,
+                            shared.SyncModeIncremental,
                         },
                     },
                 },
@@ -691,7 +691,7 @@ func main() {
                             "et",
                             "accusamus",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumOverwrite,
+                        DestinationSyncMode: shared.DestinationSyncModeOverwrite,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -731,7 +731,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumFullRefresh,
+                        SyncMode: shared.SyncModeFullRefresh,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -761,8 +761,8 @@ func main() {
                                 "explicabo",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumFullRefresh,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeFullRefresh,
                         },
                     },
                 },
@@ -773,7 +773,7 @@ func main() {
                             "molestias",
                             "atque",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumAppend,
+                        DestinationSyncMode: shared.DestinationSyncModeAppend,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -815,7 +815,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumIncremental,
+                        SyncMode: shared.SyncModeIncremental,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -850,11 +850,11 @@ func main() {
                                 "neque",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumFullRefresh,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeIncremental,
+                            shared.SyncModeIncremental,
+                            shared.SyncModeIncremental,
+                            shared.SyncModeFullRefresh,
                         },
                     },
                 },
@@ -865,7 +865,7 @@ func main() {
                             "facilis",
                             "earum",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumAppend,
+                        DestinationSyncMode: shared.DestinationSyncModeAppend,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -910,7 +910,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumFullRefresh,
+                        SyncMode: shared.SyncModeFullRefresh,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -946,8 +946,8 @@ func main() {
                                 "esse",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumFullRefresh,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeFullRefresh,
                         },
                     },
                 },

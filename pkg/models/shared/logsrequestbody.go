@@ -4,5 +4,5 @@ package shared
 
 type LogsRequestBody struct {
 	// type/source of logs produced
-	LogType LogTypeEnum `json:"logType"`
+	LogType LogType `json:"logType"`
 }

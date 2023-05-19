@@ -38,11 +38,11 @@ func main() {
     ctx := context.Background()
     res, err := s.Connection.CreateConnection(ctx, shared.ConnectionCreate{
         DestinationID: "b5e6e13b-99d4-488e-9e91-e450ad2abd44",
-        Geography: shared.GeographyEnumAuto.ToPointer(),
+        Geography: shared.GeographyAuto.ToPointer(),
         Name: airbytetest.String("Mr. Shelly Lueilwitz"),
-        NamespaceDefinition: shared.NamespaceDefinitionTypeEnumDestination.ToPointer(),
+        NamespaceDefinition: shared.NamespaceDefinitionTypeDestination.ToPointer(),
         NamespaceFormat: airbytetest.String("${SOURCE_NAMESPACE}"),
-        NonBreakingChangesPreference: shared.NonBreakingChangesPreferenceEnumIgnore.ToPointer(),
+        NonBreakingChangesPreference: shared.NonBreakingChangesPreferenceIgnore.ToPointer(),
         NotifySchemaChanges: airbytetest.Bool(false),
         OperationIds: []string{
             "a94bb4f6-3c96-49e9-a3ef-a77dfb14cd66",
@@ -55,12 +55,12 @@ func main() {
             MemoryRequest: airbytetest.String("enim"),
         },
         Schedule: &shared.ConnectionSchedule{
-            TimeUnit: shared.ConnectionScheduleTimeUnitEnumMonths,
+            TimeUnit: shared.ConnectionScheduleTimeUnitMonths,
             Units: 965417,
         },
         ScheduleData: &shared.ConnectionScheduleData{
             BasicSchedule: &shared.ConnectionScheduleDataBasicSchedule{
-                TimeUnit: shared.ConnectionScheduleDataBasicScheduleTimeUnitEnumWeeks,
+                TimeUnit: shared.ConnectionScheduleDataBasicScheduleTimeUnitWeeks,
                 Units: 588465,
             },
             Cron: &shared.ConnectionScheduleDataCron{
@@ -68,10 +68,10 @@ func main() {
                 CronTimeZone: "id",
             },
         },
-        ScheduleType: shared.ConnectionScheduleTypeEnumBasic.ToPointer(),
+        ScheduleType: shared.ConnectionScheduleTypeBasic.ToPointer(),
         SourceCatalogID: airbytetest.String("8f3a6699-7074-4ba4-869b-6e2141959890"),
         SourceID: "afa563e2-516f-4e4c-8b71-1e5b7fd2ed02",
-        Status: shared.ConnectionStatusEnumInactive,
+        Status: shared.ConnectionStatusInactive,
         SyncCatalog: &shared.AirbyteCatalog{
             Streams: []shared.AirbyteStreamAndConfiguration{
                 shared.AirbyteStreamAndConfiguration{
@@ -80,7 +80,7 @@ func main() {
                         CursorField: []string{
                             "quo",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumAppendDedup,
+                        DestinationSyncMode: shared.DestinationSyncModeAppendDedup,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -131,7 +131,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumIncremental,
+                        SyncMode: shared.SyncModeIncremental,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -169,11 +169,11 @@ func main() {
                                 "deleniti",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumIncremental,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeIncremental,
+                            shared.SyncModeIncremental,
+                            shared.SyncModeIncremental,
+                            shared.SyncModeIncremental,
                         },
                     },
                 },
@@ -185,7 +185,7 @@ func main() {
                             "dolorem",
                             "dolorem",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumAppend,
+                        DestinationSyncMode: shared.DestinationSyncModeAppend,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -214,7 +214,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumFullRefresh,
+                        SyncMode: shared.SyncModeFullRefresh,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -246,8 +246,8 @@ func main() {
                                 "aspernatur",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumFullRefresh,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeFullRefresh,
                         },
                     },
                 },
@@ -260,7 +260,7 @@ func main() {
                             "suscipit",
                             "deserunt",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumOverwrite,
+                        DestinationSyncMode: shared.DestinationSyncModeOverwrite,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -307,7 +307,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumIncremental,
+                        SyncMode: shared.SyncModeIncremental,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -327,8 +327,8 @@ func main() {
                                 "soluta",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumIncremental,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeIncremental,
                         },
                     },
                 },
@@ -542,16 +542,16 @@ func main() {
         },
         DestinationID: airbytetest.String("efd121aa-6f1e-4674-bdb0-4f15756082d6"),
         Name: airbytetest.String("Miss Percy Parisian"),
-        NamespaceDefinition: shared.NamespaceDefinitionTypeEnumSource.ToPointer(),
+        NamespaceDefinition: shared.NamespaceDefinitionTypeSource.ToPointer(),
         NamespaceFormat: airbytetest.String("${SOURCE_NAMESPACE}"),
         Prefix: airbytetest.String("at"),
         Schedule: &shared.ConnectionSchedule{
-            TimeUnit: shared.ConnectionScheduleTimeUnitEnumMinutes,
+            TimeUnit: shared.ConnectionScheduleTimeUnitMinutes,
             Units: 454162,
         },
         ScheduleData: &shared.ConnectionScheduleData{
             BasicSchedule: &shared.ConnectionScheduleDataBasicSchedule{
-                TimeUnit: shared.ConnectionScheduleDataBasicScheduleTimeUnitEnumMinutes,
+                TimeUnit: shared.ConnectionScheduleDataBasicScheduleTimeUnitMinutes,
                 Units: 326701,
             },
             Cron: &shared.ConnectionScheduleDataCron{
@@ -559,7 +559,7 @@ func main() {
                 CronTimeZone: "consectetur",
             },
         },
-        ScheduleType: shared.ConnectionScheduleTypeEnumManual.ToPointer(),
+        ScheduleType: shared.ConnectionScheduleTypeManual.ToPointer(),
         Source: &shared.SourceSearch{
             ConnectionConfiguration: airbytetest.String("iste"),
             Name: airbytetest.String("Ms. Kenneth Ledner"),
@@ -569,7 +569,7 @@ func main() {
             WorkspaceID: airbytetest.String("0b375ed4-f6fb-4ee4-9f33-317fe35b60eb"),
         },
         SourceID: airbytetest.String("1ea42655-5ba3-4c28-b44e-d53b88f3a8d8"),
-        Status: shared.ConnectionStatusEnumDeprecated.ToPointer(),
+        Status: shared.ConnectionStatusDeprecated.ToPointer(),
     })
     if err != nil {
         log.Fatal(err)
@@ -641,11 +641,11 @@ func main() {
     res, err := s.Connection.UpdateConnection(ctx, shared.ConnectionUpdate{
         BreakingChange: airbytetest.Bool(false),
         ConnectionID: "4294e369-8f44-47f6-83e8-b445e80ca55e",
-        Geography: shared.GeographyEnumEu.ToPointer(),
+        Geography: shared.GeographyEu.ToPointer(),
         Name: airbytetest.String("Martin Beatty"),
-        NamespaceDefinition: shared.NamespaceDefinitionTypeEnumSource.ToPointer(),
+        NamespaceDefinition: shared.NamespaceDefinitionTypeSource.ToPointer(),
         NamespaceFormat: airbytetest.String("${SOURCE_NAMESPACE}"),
-        NonBreakingChangesPreference: shared.NonBreakingChangesPreferenceEnumIgnore.ToPointer(),
+        NonBreakingChangesPreference: shared.NonBreakingChangesPreferenceIgnore.ToPointer(),
         NotifySchemaChanges: airbytetest.Bool(false),
         OperationIds: []string{
             "1858b6a8-9fbe-43a5-aa8e-4824d0ab4075",
@@ -661,12 +661,12 @@ func main() {
             MemoryRequest: airbytetest.String("a"),
         },
         Schedule: &shared.ConnectionSchedule{
-            TimeUnit: shared.ConnectionScheduleTimeUnitEnumDays,
+            TimeUnit: shared.ConnectionScheduleTimeUnitDays,
             Units: 300029,
         },
         ScheduleData: &shared.ConnectionScheduleData{
             BasicSchedule: &shared.ConnectionScheduleDataBasicSchedule{
-                TimeUnit: shared.ConnectionScheduleDataBasicScheduleTimeUnitEnumMonths,
+                TimeUnit: shared.ConnectionScheduleDataBasicScheduleTimeUnitMonths,
                 Units: 160467,
             },
             Cron: &shared.ConnectionScheduleDataCron{
@@ -674,9 +674,9 @@ func main() {
                 CronTimeZone: "officiis",
             },
         },
-        ScheduleType: shared.ConnectionScheduleTypeEnumBasic.ToPointer(),
+        ScheduleType: shared.ConnectionScheduleTypeBasic.ToPointer(),
         SourceCatalogID: airbytetest.String("73e922a5-7a15-4be3-a060-807e2b6e3ab8"),
-        Status: shared.ConnectionStatusEnumInactive.ToPointer(),
+        Status: shared.ConnectionStatusInactive.ToPointer(),
         SyncCatalog: &shared.AirbyteCatalog{
             Streams: []shared.AirbyteStreamAndConfiguration{
                 shared.AirbyteStreamAndConfiguration{
@@ -688,7 +688,7 @@ func main() {
                             "perspiciatis",
                             "nihil",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumOverwrite,
+                        DestinationSyncMode: shared.DestinationSyncModeOverwrite,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -724,7 +724,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumIncremental,
+                        SyncMode: shared.SyncModeIncremental,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -759,11 +759,11 @@ func main() {
                                 "modi",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumIncremental,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeIncremental,
+                            shared.SyncModeIncremental,
+                            shared.SyncModeIncremental,
+                            shared.SyncModeIncremental,
                         },
                     },
                 },
@@ -775,7 +775,7 @@ func main() {
                             "quis",
                             "inventore",
                         },
-                        DestinationSyncMode: shared.DestinationSyncModeEnumAppend,
+                        DestinationSyncMode: shared.DestinationSyncModeAppend,
                         FieldSelectionEnabled: airbytetest.Bool(false),
                         PrimaryKey: [][]string{
                             []string{
@@ -805,7 +805,7 @@ func main() {
                             },
                         },
                         Suggested: airbytetest.Bool(false),
-                        SyncMode: shared.SyncModeEnumIncremental,
+                        SyncMode: shared.SyncModeIncremental,
                     },
                     Stream: &shared.AirbyteStream{
                         DefaultCursorField: []string{
@@ -828,9 +828,9 @@ func main() {
                                 "et",
                             },
                         },
-                        SupportedSyncModes: []shared.SyncModeEnum{
-                            shared.SyncModeEnumIncremental,
-                            shared.SyncModeEnumIncremental,
+                        SupportedSyncModes: []shared.SyncMode{
+                            shared.SyncModeIncremental,
+                            shared.SyncModeIncremental,
                         },
                     },
                 },

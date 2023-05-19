@@ -148,7 +148,7 @@ func main() {
                 State: map[string]interface{}{
                     "quo": "sequi",
                 },
-                StateType: shared.ConnectionStateTypeEnumNotSet,
+                StateType: shared.ConnectionStateTypeNotSet,
                 StreamState: []shared.StreamState{
                     shared.StreamState{
                         StreamDescriptor: shared.StreamDescriptor{

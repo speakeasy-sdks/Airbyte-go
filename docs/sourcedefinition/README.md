@@ -54,7 +54,7 @@ func main() {
                 },
                 JobSpecific: []shared.JobTypeResourceLimit{
                     shared.JobTypeResourceLimit{
-                        JobType: shared.JobTypeEnumReplicate,
+                        JobType: shared.JobTypeReplicate,
                         ResourceRequirements: shared.ResourceRequirements{
                             CPULimit: airbytetest.String("facilis"),
                             CPURequest: airbytetest.String("cupiditate"),
@@ -63,7 +63,7 @@ func main() {
                         },
                     },
                     shared.JobTypeResourceLimit{
-                        JobType: shared.JobTypeEnumDiscoverSchema,
+                        JobType: shared.JobTypeDiscoverSchema,
                         ResourceRequirements: shared.ResourceRequirements{
                             CPULimit: airbytetest.String("provident"),
                             CPURequest: airbytetest.String("amet"),
@@ -411,7 +411,7 @@ func main() {
             },
             JobSpecific: []shared.JobTypeResourceLimit{
                 shared.JobTypeResourceLimit{
-                    JobType: shared.JobTypeEnumDiscoverSchema,
+                    JobType: shared.JobTypeDiscoverSchema,
                     ResourceRequirements: shared.ResourceRequirements{
                         CPULimit: airbytetest.String("odio"),
                         CPURequest: airbytetest.String("delectus"),
@@ -420,7 +420,7 @@ func main() {
                     },
                 },
                 shared.JobTypeResourceLimit{
-                    JobType: shared.JobTypeEnumConnectionUpdater,
+                    JobType: shared.JobTypeConnectionUpdater,
                     ResourceRequirements: shared.ResourceRequirements{
                         CPULimit: airbytetest.String("eius"),
                         CPURequest: airbytetest.String("eos"),
@@ -429,7 +429,7 @@ func main() {
                     },
                 },
                 shared.JobTypeResourceLimit{
-                    JobType: shared.JobTypeEnumResetConnection,
+                    JobType: shared.JobTypeResetConnection,
                     ResourceRequirements: shared.ResourceRequirements{
                         CPULimit: airbytetest.String("occaecati"),
                         CPURequest: airbytetest.String("debitis"),

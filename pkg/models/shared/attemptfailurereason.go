@@ -5,10 +5,10 @@ package shared
 type AttemptFailureReason struct {
 	ExternalMessage *string `json:"externalMessage,omitempty"`
 	// Indicates where the error originated. If not set, the origin of error is not well known.
-	FailureOrigin *AttemptFailureOriginEnum `json:"failureOrigin,omitempty"`
+	FailureOrigin *AttemptFailureOrigin `json:"failureOrigin,omitempty"`
 	// Categorizes well known errors into types for programmatic handling. If not set, the type of error is not well known.
-	FailureType     *AttemptFailureTypeEnum `json:"failureType,omitempty"`
-	InternalMessage *string                 `json:"internalMessage,omitempty"`
+	FailureType     *AttemptFailureType `json:"failureType,omitempty"`
+	InternalMessage *string             `json:"internalMessage,omitempty"`
 	// True if it is known that retrying may succeed, e.g. for a transient failure. False if it is known that a retry will not succeed, e.g. for a configuration issue. If not set, retryable status is not well known.
 	Retryable  *bool   `json:"retryable,omitempty"`
 	Stacktrace *string `json:"stacktrace,omitempty"`

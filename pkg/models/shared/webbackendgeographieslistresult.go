@@ -4,5 +4,5 @@ package shared
 
 // WebBackendGeographiesListResult - Successful operation
 type WebBackendGeographiesListResult struct {
-	Geographies []GeographyEnum `json:"geographies"`
+	Geographies []Geography `json:"geographies"`
 }

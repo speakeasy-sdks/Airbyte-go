@@ -7,18 +7,18 @@ import (
 	"fmt"
 )
 
-type CheckOperationReadStatusEnum string
+type CheckOperationReadStatus string
 
 const (
-	CheckOperationReadStatusEnumSucceeded CheckOperationReadStatusEnum = "succeeded"
-	CheckOperationReadStatusEnumFailed    CheckOperationReadStatusEnum = "failed"
+	CheckOperationReadStatusSucceeded CheckOperationReadStatus = "succeeded"
+	CheckOperationReadStatusFailed    CheckOperationReadStatus = "failed"
 )
 
-func (e CheckOperationReadStatusEnum) ToPointer() *CheckOperationReadStatusEnum {
+func (e CheckOperationReadStatus) ToPointer() *CheckOperationReadStatus {
 	return &e
 }
 
-func (e *CheckOperationReadStatusEnum) UnmarshalJSON(data []byte) error {
+func (e *CheckOperationReadStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -27,15 +27,15 @@ func (e *CheckOperationReadStatusEnum) UnmarshalJSON(data []byte) error {
 	case "succeeded":
 		fallthrough
 	case "failed":
-		*e = CheckOperationReadStatusEnum(v)
+		*e = CheckOperationReadStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CheckOperationReadStatusEnum: %v", v)
+		return fmt.Errorf("invalid value for CheckOperationReadStatus: %v", v)
 	}
 }
 
 // CheckOperationRead - Successful operation
 type CheckOperationRead struct {
-	Message *string                      `json:"message,omitempty"`
-	Status  CheckOperationReadStatusEnum `json:"status"`
+	Message *string                  `json:"message,omitempty"`
+	Status  CheckOperationReadStatus `json:"status"`
 }

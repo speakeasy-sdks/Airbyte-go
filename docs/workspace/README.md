@@ -38,7 +38,7 @@ func main() {
     ctx := context.Background()
     res, err := s.Workspace.CreateWorkspace(ctx, shared.WorkspaceCreate{
         AnonymousDataCollection: airbytetest.Bool(false),
-        DefaultGeography: shared.GeographyEnumAuto.ToPointer(),
+        DefaultGeography: shared.GeographyAuto.ToPointer(),
         DisplaySetupWizard: airbytetest.Bool(false),
         Email: airbytetest.String("Franco30@yahoo.com"),
         Name: "Luz Hudson",
@@ -50,7 +50,7 @@ func main() {
                     "doloremque": "officiis",
                     "nisi": "reprehenderit",
                 },
-                NotificationType: shared.NotificationTypeEnumCustomerio,
+                NotificationType: shared.NotificationTypeCustomerio,
                 SendOnFailure: false,
                 SendOnSuccess: false,
                 SlackConfiguration: &shared.SlackNotificationConfiguration{
@@ -63,7 +63,7 @@ func main() {
                     "facere": "tenetur",
                     "saepe": "assumenda",
                 },
-                NotificationType: shared.NotificationTypeEnumSlack,
+                NotificationType: shared.NotificationTypeSlack,
                 SendOnFailure: false,
                 SendOnSuccess: false,
                 SlackConfiguration: &shared.SlackNotificationConfiguration{
@@ -75,7 +75,7 @@ func main() {
                     "sit": "recusandae",
                     "a": "exercitationem",
                 },
-                NotificationType: shared.NotificationTypeEnumSlack,
+                NotificationType: shared.NotificationTypeSlack,
                 SendOnFailure: false,
                 SendOnSuccess: false,
                 SlackConfiguration: &shared.SlackNotificationConfiguration{
@@ -286,7 +286,7 @@ func main() {
     ctx := context.Background()
     res, err := s.Workspace.UpdateWorkspace(ctx, shared.WorkspaceUpdate{
         AnonymousDataCollection: airbytetest.Bool(false),
-        DefaultGeography: shared.GeographyEnumAuto.ToPointer(),
+        DefaultGeography: shared.GeographyAuto.ToPointer(),
         DisplaySetupWizard: airbytetest.Bool(false),
         Email: airbytetest.String("Effie2@gmail.com"),
         InitialSetupComplete: airbytetest.Bool(false),
@@ -296,7 +296,7 @@ func main() {
                 CustomerioConfiguration: map[string]interface{}{
                     "quibusdam": "autem",
                 },
-                NotificationType: shared.NotificationTypeEnumCustomerio,
+                NotificationType: shared.NotificationTypeCustomerio,
                 SendOnFailure: false,
                 SendOnSuccess: false,
                 SlackConfiguration: &shared.SlackNotificationConfiguration{
@@ -309,7 +309,7 @@ func main() {
                     "aliquam": "ea",
                     "aliquam": "corporis",
                 },
-                NotificationType: shared.NotificationTypeEnumCustomerio,
+                NotificationType: shared.NotificationTypeCustomerio,
                 SendOnFailure: false,
                 SendOnSuccess: false,
                 SlackConfiguration: &shared.SlackNotificationConfiguration{
@@ -320,7 +320,7 @@ func main() {
                 CustomerioConfiguration: map[string]interface{}{
                     "aut": "molestias",
                 },
-                NotificationType: shared.NotificationTypeEnumSlack,
+                NotificationType: shared.NotificationTypeSlack,
                 SendOnFailure: false,
                 SendOnSuccess: false,
                 SlackConfiguration: &shared.SlackNotificationConfiguration{

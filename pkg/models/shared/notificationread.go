@@ -7,18 +7,18 @@ import (
 	"fmt"
 )
 
-type NotificationReadStatusEnum string
+type NotificationReadStatus string
 
 const (
-	NotificationReadStatusEnumSucceeded NotificationReadStatusEnum = "succeeded"
-	NotificationReadStatusEnumFailed    NotificationReadStatusEnum = "failed"
+	NotificationReadStatusSucceeded NotificationReadStatus = "succeeded"
+	NotificationReadStatusFailed    NotificationReadStatus = "failed"
 )
 
-func (e NotificationReadStatusEnum) ToPointer() *NotificationReadStatusEnum {
+func (e NotificationReadStatus) ToPointer() *NotificationReadStatus {
 	return &e
 }
 
-func (e *NotificationReadStatusEnum) UnmarshalJSON(data []byte) error {
+func (e *NotificationReadStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -27,15 +27,15 @@ func (e *NotificationReadStatusEnum) UnmarshalJSON(data []byte) error {
 	case "succeeded":
 		fallthrough
 	case "failed":
-		*e = NotificationReadStatusEnum(v)
+		*e = NotificationReadStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for NotificationReadStatusEnum: %v", v)
+		return fmt.Errorf("invalid value for NotificationReadStatus: %v", v)
 	}
 }
 
 // NotificationRead - Successful operation
 type NotificationRead struct {
-	Message *string                    `json:"message,omitempty"`
-	Status  NotificationReadStatusEnum `json:"status"`
+	Message *string                `json:"message,omitempty"`
+	Status  NotificationReadStatus `json:"status"`
 }

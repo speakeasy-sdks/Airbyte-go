@@ -9,7 +9,7 @@ import (
 
 type GetStateTypeResponse struct {
 	// Successful operation
-	ConnectionStateType *shared.ConnectionStateTypeEnum
+	ConnectionStateType *shared.ConnectionStateType
 	ContentType         string
 	// Input failed validation
 	InvalidInputExceptionInfo *shared.InvalidInputExceptionInfo

@@ -84,7 +84,7 @@ func main() {
             State: map[string]interface{}{
                 "accusamus": "quod",
             },
-            StateType: shared.ConnectionStateTypeEnumGlobal,
+            StateType: shared.ConnectionStateTypeGlobal,
             StreamState: []shared.StreamState{
                 shared.StreamState{
                     StreamDescriptor: shared.StreamDescriptor{

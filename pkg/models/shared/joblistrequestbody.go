@@ -3,8 +3,8 @@
 package shared
 
 type JobListRequestBody struct {
-	ConfigID       string              `json:"configId"`
-	ConfigTypes    []JobConfigTypeEnum `json:"configTypes"`
-	IncludingJobID *int64              `json:"includingJobId,omitempty"`
-	Pagination     *Pagination         `json:"pagination,omitempty"`
+	ConfigID       string          `json:"configId"`
+	ConfigTypes    []JobConfigType `json:"configTypes"`
+	IncludingJobID *int64          `json:"includingJobId,omitempty"`
+	Pagination     *Pagination     `json:"pagination,omitempty"`
 }

@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceAuthSpecificationAuthTypeEnum string
+type SourceAuthSpecificationAuthType string
 
 const (
-	SourceAuthSpecificationAuthTypeEnumOauth20 SourceAuthSpecificationAuthTypeEnum = "oauth2.0"
+	SourceAuthSpecificationAuthTypeOauth20 SourceAuthSpecificationAuthType = "oauth2.0"
 )
 
-func (e SourceAuthSpecificationAuthTypeEnum) ToPointer() *SourceAuthSpecificationAuthTypeEnum {
+func (e SourceAuthSpecificationAuthType) ToPointer() *SourceAuthSpecificationAuthType {
 	return &e
 }
 
-func (e *SourceAuthSpecificationAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAuthSpecificationAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceAuthSpecificationAuthTypeEnum(v)
+		*e = SourceAuthSpecificationAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAuthSpecificationAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAuthSpecificationAuthType: %v", v)
 	}
 }
 
 type SourceAuthSpecification struct {
-	AuthType *SourceAuthSpecificationAuthTypeEnum `json:"auth_type,omitempty"`
+	AuthType *SourceAuthSpecificationAuthType `json:"auth_type,omitempty"`
 	// An object containing any metadata needed to describe this connector's Oauth flow
 	Oauth2Specification *OAuth2Specification `json:"oauth2Specification,omitempty"`
 }

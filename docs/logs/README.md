@@ -25,7 +25,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Logs.GetLogs(ctx, shared.LogsRequestBody{
-        LogType: shared.LogTypeEnumServer,
+        LogType: shared.LogTypeServer,
     })
     if err != nil {
         log.Fatal(err)

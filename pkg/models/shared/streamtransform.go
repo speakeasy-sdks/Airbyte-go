@@ -7,19 +7,19 @@ import (
 	"fmt"
 )
 
-type StreamTransformTransformTypeEnum string
+type StreamTransformTransformType string
 
 const (
-	StreamTransformTransformTypeEnumAddStream    StreamTransformTransformTypeEnum = "add_stream"
-	StreamTransformTransformTypeEnumRemoveStream StreamTransformTransformTypeEnum = "remove_stream"
-	StreamTransformTransformTypeEnumUpdateStream StreamTransformTransformTypeEnum = "update_stream"
+	StreamTransformTransformTypeAddStream    StreamTransformTransformType = "add_stream"
+	StreamTransformTransformTypeRemoveStream StreamTransformTransformType = "remove_stream"
+	StreamTransformTransformTypeUpdateStream StreamTransformTransformType = "update_stream"
 )
 
-func (e StreamTransformTransformTypeEnum) ToPointer() *StreamTransformTransformTypeEnum {
+func (e StreamTransformTransformType) ToPointer() *StreamTransformTransformType {
 	return &e
 }
 
-func (e *StreamTransformTransformTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *StreamTransformTransformType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -30,16 +30,16 @@ func (e *StreamTransformTransformTypeEnum) UnmarshalJSON(data []byte) error {
 	case "remove_stream":
 		fallthrough
 	case "update_stream":
-		*e = StreamTransformTransformTypeEnum(v)
+		*e = StreamTransformTransformType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for StreamTransformTransformTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for StreamTransformTransformType: %v", v)
 	}
 }
 
 type StreamTransform struct {
-	StreamDescriptor StreamDescriptor                 `json:"streamDescriptor"`
-	TransformType    StreamTransformTransformTypeEnum `json:"transformType"`
+	StreamDescriptor StreamDescriptor             `json:"streamDescriptor"`
+	TransformType    StreamTransformTransformType `json:"transformType"`
 	// list of field transformations. order does not matter.
 	UpdateStream []FieldTransform `json:"updateStream,omitempty"`
 }

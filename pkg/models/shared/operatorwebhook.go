@@ -14,27 +14,27 @@ type OperatorWebhookDbtCloud struct {
 	JobID int64 `json:"jobId"`
 }
 
-type OperatorWebhookWebhookTypeEnum string
+type OperatorWebhookWebhookType string
 
 const (
-	OperatorWebhookWebhookTypeEnumDbtCloud OperatorWebhookWebhookTypeEnum = "dbtCloud"
+	OperatorWebhookWebhookTypeDbtCloud OperatorWebhookWebhookType = "dbtCloud"
 )
 
-func (e OperatorWebhookWebhookTypeEnum) ToPointer() *OperatorWebhookWebhookTypeEnum {
+func (e OperatorWebhookWebhookType) ToPointer() *OperatorWebhookWebhookType {
 	return &e
 }
 
-func (e *OperatorWebhookWebhookTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *OperatorWebhookWebhookType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "dbtCloud":
-		*e = OperatorWebhookWebhookTypeEnum(v)
+		*e = OperatorWebhookWebhookType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for OperatorWebhookWebhookTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for OperatorWebhookWebhookType: %v", v)
 	}
 }
 
@@ -45,6 +45,6 @@ type OperatorWebhook struct {
 	// DEPRECATED. Populate dbtCloud instead.
 	ExecutionURL *string `json:"executionUrl,omitempty"`
 	// The id of the webhook configs to use from the workspace.
-	WebhookConfigID *string                         `json:"webhookConfigId,omitempty"`
-	WebhookType     *OperatorWebhookWebhookTypeEnum `json:"webhookType,omitempty"`
+	WebhookConfigID *string                     `json:"webhookConfigId,omitempty"`
+	WebhookType     *OperatorWebhookWebhookType `json:"webhookType,omitempty"`
 }

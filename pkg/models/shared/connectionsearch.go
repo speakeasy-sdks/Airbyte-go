@@ -8,7 +8,7 @@ type ConnectionSearch struct {
 	DestinationID *string            `json:"destinationId,omitempty"`
 	Name          *string            `json:"name,omitempty"`
 	// Method used for computing final namespace in destination
-	NamespaceDefinition *NamespaceDefinitionTypeEnum `json:"namespaceDefinition,omitempty"`
+	NamespaceDefinition *NamespaceDefinitionType `json:"namespaceDefinition,omitempty"`
 	// Used when namespaceDefinition is 'customformat'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.
 	NamespaceFormat *string `json:"namespaceFormat,omitempty"`
 	// Prefix that will be prepended to the name of each stream when it is written to the destination.
@@ -18,9 +18,9 @@ type ConnectionSearch struct {
 	// schedule for when the the connection should run, per the schedule type
 	ScheduleData *ConnectionScheduleData `json:"scheduleData,omitempty"`
 	// determine how the schedule data should be interpreted
-	ScheduleType *ConnectionScheduleTypeEnum `json:"scheduleType,omitempty"`
-	Source       *SourceSearch               `json:"source,omitempty"`
-	SourceID     *string                     `json:"sourceId,omitempty"`
+	ScheduleType *ConnectionScheduleType `json:"scheduleType,omitempty"`
+	Source       *SourceSearch           `json:"source,omitempty"`
+	SourceID     *string                 `json:"sourceId,omitempty"`
 	// Active means that data is flowing through the connection. Inactive means it is not. Deprecated means the connection is off and cannot be re-activated. the schema field describes the elements of the schema that will be synced.
-	Status *ConnectionStatusEnum `json:"status,omitempty"`
+	Status *ConnectionStatus `json:"status,omitempty"`
 }

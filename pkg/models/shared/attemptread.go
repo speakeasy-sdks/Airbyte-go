@@ -9,7 +9,7 @@ type AttemptRead struct {
 	FailureSummary *AttemptFailureSummary `json:"failureSummary,omitempty"`
 	ID             int64                  `json:"id"`
 	RecordsSynced  *int64                 `json:"recordsSynced,omitempty"`
-	Status         AttemptStatusEnum      `json:"status"`
+	Status         AttemptStatus          `json:"status"`
 	StreamStats    []AttemptStreamStats   `json:"streamStats,omitempty"`
 	TotalStats     *AttemptStats          `json:"totalStats,omitempty"`
 	UpdatedAt      int64                  `json:"updatedAt"`

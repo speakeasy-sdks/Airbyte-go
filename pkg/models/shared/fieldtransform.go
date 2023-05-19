@@ -7,19 +7,19 @@ import (
 	"fmt"
 )
 
-type FieldTransformTransformTypeEnum string
+type FieldTransformTransformType string
 
 const (
-	FieldTransformTransformTypeEnumAddField          FieldTransformTransformTypeEnum = "add_field"
-	FieldTransformTransformTypeEnumRemoveField       FieldTransformTransformTypeEnum = "remove_field"
-	FieldTransformTransformTypeEnumUpdateFieldSchema FieldTransformTransformTypeEnum = "update_field_schema"
+	FieldTransformTransformTypeAddField          FieldTransformTransformType = "add_field"
+	FieldTransformTransformTypeRemoveField       FieldTransformTransformType = "remove_field"
+	FieldTransformTransformTypeUpdateFieldSchema FieldTransformTransformType = "update_field_schema"
 )
 
-func (e FieldTransformTransformTypeEnum) ToPointer() *FieldTransformTransformTypeEnum {
+func (e FieldTransformTransformType) ToPointer() *FieldTransformTransformType {
 	return &e
 }
 
-func (e *FieldTransformTransformTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *FieldTransformTransformType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -30,10 +30,10 @@ func (e *FieldTransformTransformTypeEnum) UnmarshalJSON(data []byte) error {
 	case "remove_field":
 		fallthrough
 	case "update_field_schema":
-		*e = FieldTransformTransformTypeEnum(v)
+		*e = FieldTransformTransformType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for FieldTransformTransformTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for FieldTransformTransformType: %v", v)
 	}
 }
 
@@ -42,8 +42,8 @@ type FieldTransform struct {
 	AddField *FieldAdd `json:"addField,omitempty"`
 	Breaking bool      `json:"breaking"`
 	// A field name is a list of strings that form the path to the field.
-	FieldName         []string                        `json:"fieldName"`
-	RemoveField       *FieldRemove                    `json:"removeField,omitempty"`
-	TransformType     FieldTransformTransformTypeEnum `json:"transformType"`
-	UpdateFieldSchema *FieldSchemaUpdate              `json:"updateFieldSchema,omitempty"`
+	FieldName         []string                    `json:"fieldName"`
+	RemoveField       *FieldRemove                `json:"removeField,omitempty"`
+	TransformType     FieldTransformTransformType `json:"transformType"`
+	UpdateFieldSchema *FieldSchemaUpdate          `json:"updateFieldSchema,omitempty"`
 }

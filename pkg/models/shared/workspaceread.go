@@ -6,7 +6,7 @@ package shared
 type WorkspaceRead struct {
 	AnonymousDataCollection *bool               `json:"anonymousDataCollection,omitempty"`
 	CustomerID              string              `json:"customerId"`
-	DefaultGeography        *GeographyEnum      `json:"defaultGeography,omitempty"`
+	DefaultGeography        *Geography          `json:"defaultGeography,omitempty"`
 	DisplaySetupWizard      *bool               `json:"displaySetupWizard,omitempty"`
 	Email                   *string             `json:"email,omitempty"`
 	FeedbackDone            *bool               `json:"feedbackDone,omitempty"`

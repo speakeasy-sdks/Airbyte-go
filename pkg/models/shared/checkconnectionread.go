@@ -7,18 +7,18 @@ import (
 	"fmt"
 )
 
-type CheckConnectionReadStatusEnum string
+type CheckConnectionReadStatus string
 
 const (
-	CheckConnectionReadStatusEnumSucceeded CheckConnectionReadStatusEnum = "succeeded"
-	CheckConnectionReadStatusEnumFailed    CheckConnectionReadStatusEnum = "failed"
+	CheckConnectionReadStatusSucceeded CheckConnectionReadStatus = "succeeded"
+	CheckConnectionReadStatusFailed    CheckConnectionReadStatus = "failed"
 )
 
-func (e CheckConnectionReadStatusEnum) ToPointer() *CheckConnectionReadStatusEnum {
+func (e CheckConnectionReadStatus) ToPointer() *CheckConnectionReadStatus {
 	return &e
 }
 
-func (e *CheckConnectionReadStatusEnum) UnmarshalJSON(data []byte) error {
+func (e *CheckConnectionReadStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -27,16 +27,16 @@ func (e *CheckConnectionReadStatusEnum) UnmarshalJSON(data []byte) error {
 	case "succeeded":
 		fallthrough
 	case "failed":
-		*e = CheckConnectionReadStatusEnum(v)
+		*e = CheckConnectionReadStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CheckConnectionReadStatusEnum: %v", v)
+		return fmt.Errorf("invalid value for CheckConnectionReadStatus: %v", v)
 	}
 }
 
 // CheckConnectionRead - Successful operation
 type CheckConnectionRead struct {
-	JobInfo SynchronousJobRead            `json:"jobInfo"`
-	Message *string                       `json:"message,omitempty"`
-	Status  CheckConnectionReadStatusEnum `json:"status"`
+	JobInfo SynchronousJobRead        `json:"jobInfo"`
+	Message *string                   `json:"message,omitempty"`
+	Status  CheckConnectionReadStatus `json:"status"`
 }

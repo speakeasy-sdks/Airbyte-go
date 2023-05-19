@@ -7,9 +7,9 @@ type DestinationDefinitionSpecificationRead struct {
 	AdvancedAuth      *AdvancedAuth                 `json:"advancedAuth,omitempty"`
 	AuthSpecification *DestinationAuthSpecification `json:"authSpecification,omitempty"`
 	// The specification for what values are required to configure the destinationDefinition.
-	ConnectionSpecification       interface{}               `json:"connectionSpecification,omitempty"`
-	DestinationDefinitionID       string                    `json:"destinationDefinitionId"`
-	DocumentationURL              *string                   `json:"documentationUrl,omitempty"`
-	JobInfo                       SynchronousJobRead        `json:"jobInfo"`
-	SupportedDestinationSyncModes []DestinationSyncModeEnum `json:"supportedDestinationSyncModes,omitempty"`
+	ConnectionSpecification       interface{}           `json:"connectionSpecification,omitempty"`
+	DestinationDefinitionID       string                `json:"destinationDefinitionId"`
+	DocumentationURL              *string               `json:"documentationUrl,omitempty"`
+	JobInfo                       SynchronousJobRead    `json:"jobInfo"`
+	SupportedDestinationSyncModes []DestinationSyncMode `json:"supportedDestinationSyncModes,omitempty"`
 }
