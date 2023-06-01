@@ -5,6 +5,7 @@ package airbytetest
 import (
 	"airbyte-test/pkg/models/operations"
 	"airbyte-test/pkg/utils"
+	"bytes"
 	"context"
 	"fmt"
 	"io"
@@ -53,7 +54,13 @@ func (s *openapi) GetOpenAPISpec(ctx context.Context) (*operations.GetOpenAPISpe
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -66,12 +73,7 @@ func (s *openapi) GetOpenAPISpec(ctx context.Context) (*operations.GetOpenAPISpe
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `text/plain`):
-			out, err := io.ReadAll(httpRes.Body)
-			if err != nil {
-				return nil, fmt.Errorf("error reading response body: %w", err)
-			}
-
-			res.GetOpenAPISpec200TextPlainBinaryString = out
+			res.GetOpenAPISpec200TextPlainBinaryString = rawBody
 		}
 	}
 

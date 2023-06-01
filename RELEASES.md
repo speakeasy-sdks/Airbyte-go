@@ -23,3 +23,11 @@ Based on:
 - Speakeasy CLI 1.35.0 (2.31.0) https://github.com/speakeasy-api/speakeasy
 ### Releases
 - [Go v1.2.0] https://github.com/speakeasy-sdks/airbyte-oss-go/releases/tag/v1.2.0 - .
+
+## 2023-06-01 00:45:40
+### Changes
+Based on:
+- OpenAPI Doc 1.0.0 
+- Speakeasy CLI 1.40.2 (2.34.2) https://github.com/speakeasy-api/speakeasy
+### Releases
+- [Go v1.3.0] https://github.com/speakeasy-sdks/airbyte-oss-go/releases/tag/v1.3.0 - .

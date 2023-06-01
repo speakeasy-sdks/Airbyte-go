@@ -6,8 +6,10 @@ import (
 	"airbyte-test/pkg/models/operations"
 	"airbyte-test/pkg/models/shared"
 	"airbyte-test/pkg/utils"
+	"bytes"
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 	"strings"
 )
@@ -63,7 +65,13 @@ func (s *operation) CheckOperation(ctx context.Context, request shared.OperatorC
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -77,7 +85,7 @@ func (s *operation) CheckOperation(ctx context.Context, request shared.OperatorC
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.CheckOperationRead
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -87,7 +95,7 @@ func (s *operation) CheckOperation(ctx context.Context, request shared.OperatorC
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.InvalidInputExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -129,7 +137,13 @@ func (s *operation) CreateOperation(ctx context.Context, request shared.Operatio
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -143,7 +157,7 @@ func (s *operation) CreateOperation(ctx context.Context, request shared.Operatio
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.OperationRead
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -153,7 +167,7 @@ func (s *operation) CreateOperation(ctx context.Context, request shared.Operatio
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.InvalidInputExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -195,7 +209,13 @@ func (s *operation) DeleteOperation(ctx context.Context, request shared.Operatio
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -210,7 +230,7 @@ func (s *operation) DeleteOperation(ctx context.Context, request shared.Operatio
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.NotFoundKnownExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -220,7 +240,7 @@ func (s *operation) DeleteOperation(ctx context.Context, request shared.Operatio
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.InvalidInputExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -262,7 +282,13 @@ func (s *operation) GetOperation(ctx context.Context, request shared.OperationID
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -276,7 +302,7 @@ func (s *operation) GetOperation(ctx context.Context, request shared.OperationID
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.OperationRead
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -286,7 +312,7 @@ func (s *operation) GetOperation(ctx context.Context, request shared.OperationID
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.NotFoundKnownExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -296,7 +322,7 @@ func (s *operation) GetOperation(ctx context.Context, request shared.OperationID
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.InvalidInputExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -339,7 +365,13 @@ func (s *operation) ListOperationsForConnection(ctx context.Context, request sha
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -353,7 +385,7 @@ func (s *operation) ListOperationsForConnection(ctx context.Context, request sha
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.OperationReadList
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -363,7 +395,7 @@ func (s *operation) ListOperationsForConnection(ctx context.Context, request sha
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.NotFoundKnownExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -373,7 +405,7 @@ func (s *operation) ListOperationsForConnection(ctx context.Context, request sha
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.InvalidInputExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -415,7 +447,13 @@ func (s *operation) UpdateOperation(ctx context.Context, request shared.Operatio
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -429,7 +467,7 @@ func (s *operation) UpdateOperation(ctx context.Context, request shared.Operatio
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.OperationRead
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -439,7 +477,7 @@ func (s *operation) UpdateOperation(ctx context.Context, request shared.Operatio
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.InvalidInputExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 

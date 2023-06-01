@@ -6,8 +6,10 @@ import (
 	"airbyte-test/pkg/models/operations"
 	"airbyte-test/pkg/models/shared"
 	"airbyte-test/pkg/utils"
+	"bytes"
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 	"strings"
 )
@@ -63,7 +65,13 @@ func (s *jobs) CancelJob(ctx context.Context, request shared.JobIDRequestBody) (
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -77,7 +85,7 @@ func (s *jobs) CancelJob(ctx context.Context, request shared.JobIDRequestBody) (
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobInfoRead
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -87,7 +95,7 @@ func (s *jobs) CancelJob(ctx context.Context, request shared.JobIDRequestBody) (
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.NotFoundKnownExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -97,7 +105,7 @@ func (s *jobs) CancelJob(ctx context.Context, request shared.JobIDRequestBody) (
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.InvalidInputExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -136,7 +144,13 @@ func (s *jobs) GetAttemptNormalizationStatusesForJob(ctx context.Context, reques
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -150,7 +164,7 @@ func (s *jobs) GetAttemptNormalizationStatusesForJob(ctx context.Context, reques
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.AttemptNormalizationStatusReadList
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -192,7 +206,13 @@ func (s *jobs) GetJobDebugInfo(ctx context.Context, request shared.JobIDRequestB
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -206,7 +226,7 @@ func (s *jobs) GetJobDebugInfo(ctx context.Context, request shared.JobIDRequestB
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobDebugInfoRead
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -216,7 +236,7 @@ func (s *jobs) GetJobDebugInfo(ctx context.Context, request shared.JobIDRequestB
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.NotFoundKnownExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -226,7 +246,7 @@ func (s *jobs) GetJobDebugInfo(ctx context.Context, request shared.JobIDRequestB
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.InvalidInputExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -268,7 +288,13 @@ func (s *jobs) GetJobInfo(ctx context.Context, request shared.JobIDRequestBody) 
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -282,7 +308,7 @@ func (s *jobs) GetJobInfo(ctx context.Context, request shared.JobIDRequestBody) 
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobInfoRead
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -292,7 +318,7 @@ func (s *jobs) GetJobInfo(ctx context.Context, request shared.JobIDRequestBody) 
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.NotFoundKnownExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -302,7 +328,7 @@ func (s *jobs) GetJobInfo(ctx context.Context, request shared.JobIDRequestBody) 
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.InvalidInputExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -344,7 +370,13 @@ func (s *jobs) GetJobInfoLight(ctx context.Context, request shared.JobIDRequestB
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -358,7 +390,7 @@ func (s *jobs) GetJobInfoLight(ctx context.Context, request shared.JobIDRequestB
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobInfoLightRead
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -368,7 +400,7 @@ func (s *jobs) GetJobInfoLight(ctx context.Context, request shared.JobIDRequestB
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.NotFoundKnownExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -378,7 +410,7 @@ func (s *jobs) GetJobInfoLight(ctx context.Context, request shared.JobIDRequestB
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.InvalidInputExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -419,7 +451,13 @@ func (s *jobs) GetLastReplicationJob(ctx context.Context, request shared.Connect
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -433,7 +471,7 @@ func (s *jobs) GetLastReplicationJob(ctx context.Context, request shared.Connect
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobOptionalRead
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -443,7 +481,7 @@ func (s *jobs) GetLastReplicationJob(ctx context.Context, request shared.Connect
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.NotFoundKnownExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -453,7 +491,7 @@ func (s *jobs) GetLastReplicationJob(ctx context.Context, request shared.Connect
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.InvalidInputExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -495,7 +533,13 @@ func (s *jobs) ListJobsFor(ctx context.Context, request shared.JobListRequestBod
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -509,7 +553,7 @@ func (s *jobs) ListJobsFor(ctx context.Context, request shared.JobListRequestBod
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobReadList
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -519,7 +563,7 @@ func (s *jobs) ListJobsFor(ctx context.Context, request shared.JobListRequestBod
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.NotFoundKnownExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
@@ -529,7 +573,7 @@ func (s *jobs) ListJobsFor(ctx context.Context, request shared.JobListRequestBod
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.InvalidInputExceptionInfo
-			if err := utils.UnmarshalJsonFromResponseBody(httpRes.Body, &out); err != nil {
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 

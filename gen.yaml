@@ -2,13 +2,13 @@ configVersion: 1.0.0
 management:
   docChecksum: 75da626340b780e90f695fde67b34e0b
   docVersion: 1.0.0
-  speakeasyVersion: 1.35.0
-  generationVersion: 2.31.0
+  speakeasyVersion: 1.40.2
+  generationVersion: 2.34.2
 generation:
   sdkClassName: airbyte-test
   singleTagPerOp: false
   telemetryEnabled: false
 go:
-  version: 1.2.0
+  version: 1.3.0
   maxMethodParams: 0
   packageName: airbyte-test

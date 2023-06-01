@@ -20,6 +20,7 @@ state.go
 webbackend.go
 workspace.go
 airbytetest.go
+.gitignore
 go.mod
 go.sum
 pkg/types/bigint.go
