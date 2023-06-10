@@ -1,0 +1,12 @@
+# CreateCustomDestinationDefinitionResponse
+
+
+## Fields
+
+| Field                                                                                 | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `ContentType`                                                                         | *string*                                                                              | :heavy_check_mark:                                                                    | N/A                                                                                   |
+| `DestinationDefinitionRead`                                                           | [*shared.DestinationDefinitionRead](../../models/shared/destinationdefinitionread.md) | :heavy_minus_sign:                                                                    | Successful operation                                                                  |
+| `InvalidInputExceptionInfo`                                                           | [*shared.InvalidInputExceptionInfo](../../models/shared/invalidinputexceptioninfo.md) | :heavy_minus_sign:                                                                    | Input failed validation                                                               |
+| `StatusCode`                                                                          | *int*                                                                                 | :heavy_check_mark:                                                                    | N/A                                                                                   |
+| `RawResponse`                                                                         | [*http.Response](https://pkg.go.dev/net/http#Response)                                | :heavy_minus_sign:                                                                    | N/A                                                                                   |

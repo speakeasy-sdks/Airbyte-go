@@ -15,28 +15,18 @@ import (
 )
 
 type operation struct {
-	defaultClient  HTTPClient
-	securityClient HTTPClient
-	serverURL      string
-	language       string
-	sdkVersion     string
-	genVersion     string
+	sdkConfiguration sdkConfiguration
 }
 
-func newOperation(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *operation {
+func newOperation(sdkConfig sdkConfiguration) *operation {
 	return &operation{
-		defaultClient:  defaultClient,
-		securityClient: securityClient,
-		serverURL:      serverURL,
-		language:       language,
-		sdkVersion:     sdkVersion,
-		genVersion:     genVersion,
+		sdkConfiguration: sdkConfig,
 	}
 }
 
 // CheckOperation - Check if an operation to be created is valid
 func (s *operation) CheckOperation(ctx context.Context, request shared.OperatorConfiguration) (*operations.CheckOperationResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/operations/check"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -52,11 +42,11 @@ func (s *operation) CheckOperation(ctx context.Context, request shared.OperatorC
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -108,7 +98,7 @@ func (s *operation) CheckOperation(ctx context.Context, request shared.OperatorC
 
 // CreateOperation - Create an operation to be applied as part of a connection pipeline
 func (s *operation) CreateOperation(ctx context.Context, request shared.OperationCreate) (*operations.CreateOperationResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/operations/create"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -124,11 +114,11 @@ func (s *operation) CreateOperation(ctx context.Context, request shared.Operatio
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -180,7 +170,7 @@ func (s *operation) CreateOperation(ctx context.Context, request shared.Operatio
 
 // DeleteOperation - Delete an operation
 func (s *operation) DeleteOperation(ctx context.Context, request shared.OperationIDRequestBody) (*operations.DeleteOperationResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/operations/delete"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -196,11 +186,11 @@ func (s *operation) DeleteOperation(ctx context.Context, request shared.Operatio
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -253,7 +243,7 @@ func (s *operation) DeleteOperation(ctx context.Context, request shared.Operatio
 
 // GetOperation - Returns an operation
 func (s *operation) GetOperation(ctx context.Context, request shared.OperationIDRequestBody) (*operations.GetOperationResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/operations/get"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -269,11 +259,11 @@ func (s *operation) GetOperation(ctx context.Context, request shared.OperationID
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -336,7 +326,7 @@ func (s *operation) GetOperation(ctx context.Context, request shared.OperationID
 // ListOperationsForConnection - Returns all operations for a connection.
 // List operations for connection.
 func (s *operation) ListOperationsForConnection(ctx context.Context, request shared.ConnectionIDRequestBody) (*operations.ListOperationsForConnectionResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/operations/list"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -352,11 +342,11 @@ func (s *operation) ListOperationsForConnection(ctx context.Context, request sha
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -418,7 +408,7 @@ func (s *operation) ListOperationsForConnection(ctx context.Context, request sha
 
 // UpdateOperation - Update an operation
 func (s *operation) UpdateOperation(ctx context.Context, request shared.OperationUpdate) (*operations.UpdateOperationResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/operations/update"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -434,11 +424,11 @@ func (s *operation) UpdateOperation(ctx context.Context, request shared.Operatio
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

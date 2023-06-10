@@ -3,6 +3,6 @@
 package shared
 
 type GlobalState struct {
-	SharedState  map[string]interface{} `json:"shared_state,omitempty"`
-	StreamStates []StreamState          `json:"streamStates"`
+	SharedState  *StateBlob    `json:"shared_state,omitempty"`
+	StreamStates []StreamState `json:"streamStates"`
 }

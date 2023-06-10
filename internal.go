@@ -15,28 +15,18 @@ import (
 )
 
 type internal struct {
-	defaultClient  HTTPClient
-	securityClient HTTPClient
-	serverURL      string
-	language       string
-	sdkVersion     string
-	genVersion     string
+	sdkConfiguration sdkConfiguration
 }
 
-func newInternal(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *internal {
+func newInternal(sdkConfig sdkConfiguration) *internal {
 	return &internal{
-		defaultClient:  defaultClient,
-		securityClient: securityClient,
-		serverURL:      serverURL,
-		language:       language,
-		sdkVersion:     sdkVersion,
-		genVersion:     genVersion,
+		sdkConfiguration: sdkConfig,
 	}
 }
 
 // CreateOrUpdateState - Create or update the state for a connection.
 func (s *internal) CreateOrUpdateState(ctx context.Context, request shared.ConnectionStateCreateOrUpdate) (*operations.CreateOrUpdateStateResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/state/create_or_update"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -52,11 +42,11 @@ func (s *internal) CreateOrUpdateState(ctx context.Context, request shared.Conne
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -118,7 +108,7 @@ func (s *internal) CreateOrUpdateState(ctx context.Context, request shared.Conne
 
 // GetAttemptNormalizationStatusesForJob - Get normalization status to determine if we can bypass normalization phase
 func (s *internal) GetAttemptNormalizationStatusesForJob(ctx context.Context, request shared.JobIDRequestBody) (*operations.GetAttemptNormalizationStatusesForJobResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/jobs/get_normalization_status"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -131,11 +121,11 @@ func (s *internal) GetAttemptNormalizationStatusesForJob(ctx context.Context, re
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -177,7 +167,7 @@ func (s *internal) GetAttemptNormalizationStatusesForJob(ctx context.Context, re
 
 // SaveStats - For worker to set sync stats of a running attempt.
 func (s *internal) SaveStats(ctx context.Context, request shared.SaveStatsRequestBody) (*operations.SaveStatsResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/attempt/save_stats"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -193,11 +183,11 @@ func (s *internal) SaveStats(ctx context.Context, request shared.SaveStatsReques
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -239,7 +229,7 @@ func (s *internal) SaveStats(ctx context.Context, request shared.SaveStatsReques
 
 // SaveSyncConfig - For worker to save the AttemptSyncConfig for an attempt.
 func (s *internal) SaveSyncConfig(ctx context.Context, request shared.SaveAttemptSyncConfigRequestBody) (*operations.SaveSyncConfigResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/attempt/save_sync_config"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -255,11 +245,11 @@ func (s *internal) SaveSyncConfig(ctx context.Context, request shared.SaveAttemp
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -301,7 +291,7 @@ func (s *internal) SaveSyncConfig(ctx context.Context, request shared.SaveAttemp
 
 // SetWorkflowInAttempt - For worker to register the workflow id in attempt.
 func (s *internal) SetWorkflowInAttempt(ctx context.Context, request shared.SetWorkflowInAttemptRequestBody) (*operations.SetWorkflowInAttemptResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/attempt/set_workflow_in_attempt"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -317,11 +307,11 @@ func (s *internal) SetWorkflowInAttempt(ctx context.Context, request shared.SetW
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -363,7 +353,7 @@ func (s *internal) SetWorkflowInAttempt(ctx context.Context, request shared.SetW
 
 // WriteDiscoverCatalogResult - Should only called from worker, to write result from discover activity back to DB.
 func (s *internal) WriteDiscoverCatalogResult(ctx context.Context, request shared.SourceDiscoverSchemaWriteRequestBody) (*operations.WriteDiscoverCatalogResultResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/sources/write_discover_catalog_result"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -379,11 +369,11 @@ func (s *internal) WriteDiscoverCatalogResult(ctx context.Context, request share
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

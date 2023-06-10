@@ -2,8 +2,11 @@
 
 package shared
 
+type ActorCatalogWithUpdatedAtCatalog struct {
+}
+
 // ActorCatalogWithUpdatedAt - A source actor catalog with the timestamp it was mostly recently updated
 type ActorCatalogWithUpdatedAt struct {
-	Catalog   map[string]interface{} `json:"catalog,omitempty"`
-	UpdatedAt *int64                 `json:"updatedAt,omitempty"`
+	Catalog   *ActorCatalogWithUpdatedAtCatalog `json:"catalog,omitempty"`
+	UpdatedAt *int64                            `json:"updatedAt,omitempty"`
 }

@@ -16,28 +16,18 @@ import (
 
 // destinationOauth - Source OAuth related resources to delegate access from user.
 type destinationOauth struct {
-	defaultClient  HTTPClient
-	securityClient HTTPClient
-	serverURL      string
-	language       string
-	sdkVersion     string
-	genVersion     string
+	sdkConfiguration sdkConfiguration
 }
 
-func newDestinationOauth(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *destinationOauth {
+func newDestinationOauth(sdkConfig sdkConfiguration) *destinationOauth {
 	return &destinationOauth{
-		defaultClient:  defaultClient,
-		securityClient: securityClient,
-		serverURL:      serverURL,
-		language:       language,
-		sdkVersion:     sdkVersion,
-		genVersion:     genVersion,
+		sdkConfiguration: sdkConfig,
 	}
 }
 
 // CompleteDestinationOAuth - Given a destination def ID generate an access/refresh token etc.
 func (s *destinationOauth) CompleteDestinationOAuth(ctx context.Context, request shared.CompleteDestinationOAuthRequest) (*operations.CompleteDestinationOAuthResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_oauths/complete_oauth"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -53,11 +43,11 @@ func (s *destinationOauth) CompleteDestinationOAuth(ctx context.Context, request
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -119,7 +109,7 @@ func (s *destinationOauth) CompleteDestinationOAuth(ctx context.Context, request
 
 // GetDestinationOAuthConsent - Given a destination connector definition ID, return the URL to the consent screen where to redirect the user to.
 func (s *destinationOauth) GetDestinationOAuthConsent(ctx context.Context, request shared.DestinationOauthConsentRequest) (*operations.GetDestinationOAuthConsentResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_oauths/get_consent_url"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -135,11 +125,11 @@ func (s *destinationOauth) GetDestinationOAuthConsent(ctx context.Context, reque
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -201,7 +191,7 @@ func (s *destinationOauth) GetDestinationOAuthConsent(ctx context.Context, reque
 
 // SetInstancewideDestinationOauthParams - Sets instancewide variables to be used for the oauth flow when creating this destination. When set, these variables will be injected into a connector's configuration before any interaction with the connector image itself. This enables running oauth flows with consistent variables e.g: the company's Google Ads developer_token, client_id, and client_secret without the user having to know about these variables.
 func (s *destinationOauth) SetInstancewideDestinationOauthParams(ctx context.Context, request shared.SetInstancewideDestinationOauthParamsRequestBody) (*operations.SetInstancewideDestinationOauthParamsResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_oauths/oauth_params/create"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -217,11 +207,11 @@ func (s *destinationOauth) SetInstancewideDestinationOauthParams(ctx context.Con
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

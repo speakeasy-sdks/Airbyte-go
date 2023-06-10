@@ -4,7 +4,7 @@ package shared
 
 type FieldSchemaUpdate struct {
 	// JSONSchema representation of the field
-	NewSchema map[string]interface{} `json:"newSchema"`
+	NewSchema FieldSchema `json:"newSchema"`
 	// JSONSchema representation of the field
-	OldSchema map[string]interface{} `json:"oldSchema"`
+	OldSchema FieldSchema `json:"oldSchema"`
 }

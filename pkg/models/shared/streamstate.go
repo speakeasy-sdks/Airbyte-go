@@ -3,6 +3,6 @@
 package shared
 
 type StreamState struct {
-	StreamDescriptor StreamDescriptor       `json:"streamDescriptor"`
-	StreamState      map[string]interface{} `json:"streamState,omitempty"`
+	StreamDescriptor StreamDescriptor `json:"streamDescriptor"`
+	StreamState      *StateBlob       `json:"streamState,omitempty"`
 }

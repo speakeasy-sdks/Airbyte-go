@@ -4,6 +4,7 @@ package airbytetest
 
 import (
 	"airbyte-test/pkg/utils"
+	"fmt"
 	"net/http"
 	"time"
 )
@@ -36,7 +37,27 @@ func Float32(f float32) *float32 { return &f }
 // Float64 provides a helper function to return a pointer to a float64
 func Float64(f float64) *float64 { return &f }
 
-// AirbyteTest - Airbyte Configuration API
+type sdkConfiguration struct {
+	DefaultClient  HTTPClient
+	SecurityClient HTTPClient
+
+	ServerURL         string
+	ServerIndex       int
+	Language          string
+	OpenAPIDocVersion string
+	SDKVersion        string
+	GenVersion        string
+}
+
+func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
+	if c.ServerURL != "" {
+		return c.ServerURL, nil
+	}
+
+	return ServerList[c.ServerIndex], nil
+}
+
+// AirbyteTest - Airbyte Configuration API: Airbyte Configuration API
 // [https://airbyte.io](https://airbyte.io).
 //
 // This API is a collection of HTTP RPC-style methods. While it is not a REST API, those familiar with REST should find the conventions of this API recognizable.
@@ -90,14 +111,7 @@ type AirbyteTest struct {
 	// Workspace - Workspace related resources.
 	Workspace *workspace
 
-	// Non-idiomatic field names below are to namespace fields from the fields names above to avoid name conflicts
-	_defaultClient  HTTPClient
-	_securityClient HTTPClient
-
-	_serverURL  string
-	_language   string
-	_sdkVersion string
-	_genVersion string
+	sdkConfiguration sdkConfiguration
 }
 
 type SDKOption func(*AirbyteTest)
@@ -105,7 +119,7 @@ type SDKOption func(*AirbyteTest)
 // WithServerURL allows the overriding of the default server URL
 func WithServerURL(serverURL string) SDKOption {
 	return func(sdk *AirbyteTest) {
-		sdk._serverURL = serverURL
+		sdk.sdkConfiguration.ServerURL = serverURL
 	}
 }
 
@@ -116,228 +130,91 @@ func WithTemplatedServerURL(serverURL string, params map[string]string) SDKOptio
 			serverURL = utils.ReplaceParameters(serverURL, params)
 		}
 
-		sdk._serverURL = serverURL
+		sdk.sdkConfiguration.ServerURL = serverURL
+	}
+}
+
+// WithServerIndex allows the overriding of the default server by index
+func WithServerIndex(serverIndex int) SDKOption {
+	return func(sdk *AirbyteTest) {
+		if serverIndex < 0 || serverIndex >= len(ServerList) {
+			panic(fmt.Errorf("server index %d out of range", serverIndex))
+		}
+
+		sdk.sdkConfiguration.ServerIndex = serverIndex
 	}
 }
 
 // WithClient allows the overriding of the default HTTP client used by the SDK
 func WithClient(client HTTPClient) SDKOption {
 	return func(sdk *AirbyteTest) {
-		sdk._defaultClient = client
+		sdk.sdkConfiguration.DefaultClient = client
 	}
 }
 
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *AirbyteTest {
 	sdk := &AirbyteTest{
-		_language:   "go",
-		_sdkVersion: "1.3.0",
-		_genVersion: "2.34.2",
+		sdkConfiguration: sdkConfiguration{
+			Language:          "go",
+			OpenAPIDocVersion: "1.0.0",
+			SDKVersion:        "1.4.0",
+			GenVersion:        "2.39.0",
+		},
 	}
 	for _, opt := range opts {
 		opt(sdk)
 	}
 
 	// Use WithClient to override the default client if you would like to customize the timeout
-	if sdk._defaultClient == nil {
-		sdk._defaultClient = &http.Client{Timeout: 60 * time.Second}
+	if sdk.sdkConfiguration.DefaultClient == nil {
+		sdk.sdkConfiguration.DefaultClient = &http.Client{Timeout: 60 * time.Second}
 	}
-	if sdk._securityClient == nil {
-		sdk._securityClient = sdk._defaultClient
-	}
-
-	if sdk._serverURL == "" {
-		sdk._serverURL = ServerList[0]
+	if sdk.sdkConfiguration.SecurityClient == nil {
+		sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
 	}
 
-	sdk.Attempt = newAttempt(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Attempt = newAttempt(sdk.sdkConfiguration)
 
-	sdk.Connection = newConnection(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Connection = newConnection(sdk.sdkConfiguration)
 
-	sdk.Destination = newDestination(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Destination = newDestination(sdk.sdkConfiguration)
 
-	sdk.DestinationDefinition = newDestinationDefinition(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.DestinationDefinition = newDestinationDefinition(sdk.sdkConfiguration)
 
-	sdk.DestinationDefinitionSpecification = newDestinationDefinitionSpecification(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.DestinationDefinitionSpecification = newDestinationDefinitionSpecification(sdk.sdkConfiguration)
 
-	sdk.DestinationOauth = newDestinationOauth(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.DestinationOauth = newDestinationOauth(sdk.sdkConfiguration)
 
-	sdk.Health = newHealth(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Health = newHealth(sdk.sdkConfiguration)
 
-	sdk.Internal = newInternal(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Internal = newInternal(sdk.sdkConfiguration)
 
-	sdk.Jobs = newJobs(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Jobs = newJobs(sdk.sdkConfiguration)
 
-	sdk.Logs = newLogs(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Logs = newLogs(sdk.sdkConfiguration)
 
-	sdk.Notifications = newNotifications(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Notifications = newNotifications(sdk.sdkConfiguration)
 
-	sdk.Openapi = newOpenapi(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Openapi = newOpenapi(sdk.sdkConfiguration)
 
-	sdk.Operation = newOperation(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Operation = newOperation(sdk.sdkConfiguration)
 
-	sdk.Scheduler = newScheduler(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Scheduler = newScheduler(sdk.sdkConfiguration)
 
-	sdk.Source = newSource(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Source = newSource(sdk.sdkConfiguration)
 
-	sdk.SourceDefinition = newSourceDefinition(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.SourceDefinition = newSourceDefinition(sdk.sdkConfiguration)
 
-	sdk.SourceDefinitionSpecification = newSourceDefinitionSpecification(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.SourceDefinitionSpecification = newSourceDefinitionSpecification(sdk.sdkConfiguration)
 
-	sdk.SourceOauth = newSourceOauth(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.SourceOauth = newSourceOauth(sdk.sdkConfiguration)
 
-	sdk.State = newState(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.State = newState(sdk.sdkConfiguration)
 
-	sdk.WebBackend = newWebBackend(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.WebBackend = newWebBackend(sdk.sdkConfiguration)
 
-	sdk.Workspace = newWorkspace(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Workspace = newWorkspace(sdk.sdkConfiguration)
 
 	return sdk
 }

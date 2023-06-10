@@ -16,28 +16,18 @@ import (
 
 // destinationDefinition - DestinationDefinition related resources.
 type destinationDefinition struct {
-	defaultClient  HTTPClient
-	securityClient HTTPClient
-	serverURL      string
-	language       string
-	sdkVersion     string
-	genVersion     string
+	sdkConfiguration sdkConfiguration
 }
 
-func newDestinationDefinition(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *destinationDefinition {
+func newDestinationDefinition(sdkConfig sdkConfiguration) *destinationDefinition {
 	return &destinationDefinition{
-		defaultClient:  defaultClient,
-		securityClient: securityClient,
-		serverURL:      serverURL,
-		language:       language,
-		sdkVersion:     sdkVersion,
-		genVersion:     genVersion,
+		sdkConfiguration: sdkConfig,
 	}
 }
 
 // CreateCustomDestinationDefinition - Creates a custom destinationDefinition for the given workspace
 func (s *destinationDefinition) CreateCustomDestinationDefinition(ctx context.Context, request shared.CustomDestinationDefinitionCreate) (*operations.CreateCustomDestinationDefinitionResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_definitions/create_custom"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -50,11 +40,11 @@ func (s *destinationDefinition) CreateCustomDestinationDefinition(ctx context.Co
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -106,7 +96,7 @@ func (s *destinationDefinition) CreateCustomDestinationDefinition(ctx context.Co
 
 // DeleteDestinationDefinition - Delete a destination definition
 func (s *destinationDefinition) DeleteDestinationDefinition(ctx context.Context, request shared.DestinationDefinitionIDRequestBody) (*operations.DeleteDestinationDefinitionResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_definitions/delete"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -122,11 +112,11 @@ func (s *destinationDefinition) DeleteDestinationDefinition(ctx context.Context,
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -179,7 +169,7 @@ func (s *destinationDefinition) DeleteDestinationDefinition(ctx context.Context,
 
 // GetDestinationDefinition - Get destinationDefinition
 func (s *destinationDefinition) GetDestinationDefinition(ctx context.Context, request shared.DestinationDefinitionIDRequestBody) (*operations.GetDestinationDefinitionResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_definitions/get"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -195,11 +185,11 @@ func (s *destinationDefinition) GetDestinationDefinition(ctx context.Context, re
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -261,7 +251,7 @@ func (s *destinationDefinition) GetDestinationDefinition(ctx context.Context, re
 
 // GetDestinationDefinitionForWorkspace - Get a destinationDefinition that is configured for the given workspace
 func (s *destinationDefinition) GetDestinationDefinitionForWorkspace(ctx context.Context, request shared.DestinationDefinitionIDWithWorkspaceID) (*operations.GetDestinationDefinitionForWorkspaceResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_definitions/get_for_workspace"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -277,11 +267,11 @@ func (s *destinationDefinition) GetDestinationDefinitionForWorkspace(ctx context
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -343,7 +333,7 @@ func (s *destinationDefinition) GetDestinationDefinitionForWorkspace(ctx context
 
 // GrantDestinationDefinitionToWorkspace - grant a private, non-custom destinationDefinition to a given workspace
 func (s *destinationDefinition) GrantDestinationDefinitionToWorkspace(ctx context.Context, request shared.DestinationDefinitionIDWithWorkspaceID) (*operations.GrantDestinationDefinitionToWorkspaceResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_definitions/grant_definition"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -359,11 +349,11 @@ func (s *destinationDefinition) GrantDestinationDefinitionToWorkspace(ctx contex
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -425,7 +415,7 @@ func (s *destinationDefinition) GrantDestinationDefinitionToWorkspace(ctx contex
 
 // ListDestinationDefinitions - List all the destinationDefinitions the current Airbyte deployment is configured to use
 func (s *destinationDefinition) ListDestinationDefinitions(ctx context.Context) (*operations.ListDestinationDefinitionsResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_definitions/list"
 
 	req, err := http.NewRequestWithContext(ctx, "POST", url, nil)
@@ -433,9 +423,9 @@ func (s *destinationDefinition) ListDestinationDefinitions(ctx context.Context) 
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -477,7 +467,7 @@ func (s *destinationDefinition) ListDestinationDefinitions(ctx context.Context) 
 
 // ListDestinationDefinitionsForWorkspace - List all the destinationDefinitions the given workspace is configured to use
 func (s *destinationDefinition) ListDestinationDefinitionsForWorkspace(ctx context.Context, request shared.WorkspaceIDRequestBody) (*operations.ListDestinationDefinitionsForWorkspaceResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_definitions/list_for_workspace"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -490,11 +480,11 @@ func (s *destinationDefinition) ListDestinationDefinitionsForWorkspace(ctx conte
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -537,7 +527,7 @@ func (s *destinationDefinition) ListDestinationDefinitionsForWorkspace(ctx conte
 // ListLatestDestinationDefinitions - List the latest destinationDefinitions Airbyte supports
 // Guaranteed to retrieve the latest information on supported destinations.
 func (s *destinationDefinition) ListLatestDestinationDefinitions(ctx context.Context) (*operations.ListLatestDestinationDefinitionsResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_definitions/list_latest"
 
 	req, err := http.NewRequestWithContext(ctx, "POST", url, nil)
@@ -545,9 +535,9 @@ func (s *destinationDefinition) ListLatestDestinationDefinitions(ctx context.Con
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -589,7 +579,7 @@ func (s *destinationDefinition) ListLatestDestinationDefinitions(ctx context.Con
 
 // ListPrivateDestinationDefinitions - List all private, non-custom destinationDefinitions, and for each indicate whether the given workspace has a grant for using the definition. Used by admins to view and modify a given workspace's grants.
 func (s *destinationDefinition) ListPrivateDestinationDefinitions(ctx context.Context, request shared.WorkspaceIDRequestBody) (*operations.ListPrivateDestinationDefinitionsResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_definitions/list_private"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -602,11 +592,11 @@ func (s *destinationDefinition) ListPrivateDestinationDefinitions(ctx context.Co
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -648,7 +638,7 @@ func (s *destinationDefinition) ListPrivateDestinationDefinitions(ctx context.Co
 
 // RevokeDestinationDefinitionFromWorkspace - revoke a grant to a private, non-custom destinationDefinition from a given workspace
 func (s *destinationDefinition) RevokeDestinationDefinitionFromWorkspace(ctx context.Context, request shared.DestinationDefinitionIDWithWorkspaceID) (*operations.RevokeDestinationDefinitionFromWorkspaceResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_definitions/revoke_definition"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -664,11 +654,11 @@ func (s *destinationDefinition) RevokeDestinationDefinitionFromWorkspace(ctx con
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -721,7 +711,7 @@ func (s *destinationDefinition) RevokeDestinationDefinitionFromWorkspace(ctx con
 
 // UpdateDestinationDefinition - Update destinationDefinition
 func (s *destinationDefinition) UpdateDestinationDefinition(ctx context.Context, request shared.DestinationDefinitionUpdate) (*operations.UpdateDestinationDefinitionResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_definitions/update"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -737,11 +727,11 @@ func (s *destinationDefinition) UpdateDestinationDefinition(ctx context.Context,
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

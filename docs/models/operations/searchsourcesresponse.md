@@ -1,0 +1,12 @@
+# SearchSourcesResponse
+
+
+## Fields
+
+| Field                                                                                 | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `ContentType`                                                                         | *string*                                                                              | :heavy_check_mark:                                                                    | N/A                                                                                   |
+| `InvalidInputExceptionInfo`                                                           | [*shared.InvalidInputExceptionInfo](../../models/shared/invalidinputexceptioninfo.md) | :heavy_minus_sign:                                                                    | Input failed validation                                                               |
+| `SourceReadList`                                                                      | [*shared.SourceReadList](../../models/shared/sourcereadlist.md)                       | :heavy_minus_sign:                                                                    | Successful operation                                                                  |
+| `StatusCode`                                                                          | *int*                                                                                 | :heavy_check_mark:                                                                    | N/A                                                                                   |
+| `RawResponse`                                                                         | [*http.Response](https://pkg.go.dev/net/http#Response)                                | :heavy_minus_sign:                                                                    | N/A                                                                                   |

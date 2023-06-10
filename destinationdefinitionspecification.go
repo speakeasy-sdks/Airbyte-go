@@ -16,28 +16,18 @@ import (
 
 // destinationDefinitionSpecification - DestinationDefinitionSpecification related resources.
 type destinationDefinitionSpecification struct {
-	defaultClient  HTTPClient
-	securityClient HTTPClient
-	serverURL      string
-	language       string
-	sdkVersion     string
-	genVersion     string
+	sdkConfiguration sdkConfiguration
 }
 
-func newDestinationDefinitionSpecification(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *destinationDefinitionSpecification {
+func newDestinationDefinitionSpecification(sdkConfig sdkConfiguration) *destinationDefinitionSpecification {
 	return &destinationDefinitionSpecification{
-		defaultClient:  defaultClient,
-		securityClient: securityClient,
-		serverURL:      serverURL,
-		language:       language,
-		sdkVersion:     sdkVersion,
-		genVersion:     genVersion,
+		sdkConfiguration: sdkConfig,
 	}
 }
 
 // GetDestinationDefinitionSpecification - Get specification for a destinationDefinition
 func (s *destinationDefinitionSpecification) GetDestinationDefinitionSpecification(ctx context.Context, request shared.DestinationDefinitionIDWithWorkspaceID) (*operations.GetDestinationDefinitionSpecificationResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/destination_definition_specifications/get"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -53,11 +43,11 @@ func (s *destinationDefinitionSpecification) GetDestinationDefinitionSpecificati
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

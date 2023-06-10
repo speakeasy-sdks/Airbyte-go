@@ -16,28 +16,18 @@ import (
 
 // sourceDefinition - SourceDefinition related resources.
 type sourceDefinition struct {
-	defaultClient  HTTPClient
-	securityClient HTTPClient
-	serverURL      string
-	language       string
-	sdkVersion     string
-	genVersion     string
+	sdkConfiguration sdkConfiguration
 }
 
-func newSourceDefinition(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *sourceDefinition {
+func newSourceDefinition(sdkConfig sdkConfiguration) *sourceDefinition {
 	return &sourceDefinition{
-		defaultClient:  defaultClient,
-		securityClient: securityClient,
-		serverURL:      serverURL,
-		language:       language,
-		sdkVersion:     sdkVersion,
-		genVersion:     genVersion,
+		sdkConfiguration: sdkConfig,
 	}
 }
 
 // CreateCustomSourceDefinition - Creates a custom sourceDefinition for the given workspace
 func (s *sourceDefinition) CreateCustomSourceDefinition(ctx context.Context, request shared.CustomSourceDefinitionCreate) (*operations.CreateCustomSourceDefinitionResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/source_definitions/create_custom"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -50,11 +40,11 @@ func (s *sourceDefinition) CreateCustomSourceDefinition(ctx context.Context, req
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -106,7 +96,7 @@ func (s *sourceDefinition) CreateCustomSourceDefinition(ctx context.Context, req
 
 // DeleteSourceDefinition - Delete a source definition
 func (s *sourceDefinition) DeleteSourceDefinition(ctx context.Context, request shared.SourceDefinitionIDRequestBody) (*operations.DeleteSourceDefinitionResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/source_definitions/delete"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -122,11 +112,11 @@ func (s *sourceDefinition) DeleteSourceDefinition(ctx context.Context, request s
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -179,7 +169,7 @@ func (s *sourceDefinition) DeleteSourceDefinition(ctx context.Context, request s
 
 // GetSourceDefinition - Get source
 func (s *sourceDefinition) GetSourceDefinition(ctx context.Context, request shared.SourceDefinitionIDRequestBody) (*operations.GetSourceDefinitionResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/source_definitions/get"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -195,11 +185,11 @@ func (s *sourceDefinition) GetSourceDefinition(ctx context.Context, request shar
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -261,7 +251,7 @@ func (s *sourceDefinition) GetSourceDefinition(ctx context.Context, request shar
 
 // GetSourceDefinitionForWorkspace - Get a sourceDefinition that is configured for the given workspace
 func (s *sourceDefinition) GetSourceDefinitionForWorkspace(ctx context.Context, request shared.SourceDefinitionIDWithWorkspaceID) (*operations.GetSourceDefinitionForWorkspaceResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/source_definitions/get_for_workspace"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -277,11 +267,11 @@ func (s *sourceDefinition) GetSourceDefinitionForWorkspace(ctx context.Context, 
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -343,7 +333,7 @@ func (s *sourceDefinition) GetSourceDefinitionForWorkspace(ctx context.Context, 
 
 // GrantSourceDefinitionToWorkspace - grant a private, non-custom sourceDefinition to a given workspace
 func (s *sourceDefinition) GrantSourceDefinitionToWorkspace(ctx context.Context, request shared.SourceDefinitionIDWithWorkspaceID) (*operations.GrantSourceDefinitionToWorkspaceResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/source_definitions/grant_definition"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -359,11 +349,11 @@ func (s *sourceDefinition) GrantSourceDefinitionToWorkspace(ctx context.Context,
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -426,7 +416,7 @@ func (s *sourceDefinition) GrantSourceDefinitionToWorkspace(ctx context.Context,
 // ListLatestSourceDefinitions - List the latest sourceDefinitions Airbyte supports
 // Guaranteed to retrieve the latest information on supported sources.
 func (s *sourceDefinition) ListLatestSourceDefinitions(ctx context.Context) (*operations.ListLatestSourceDefinitionsResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/source_definitions/list_latest"
 
 	req, err := http.NewRequestWithContext(ctx, "POST", url, nil)
@@ -434,9 +424,9 @@ func (s *sourceDefinition) ListLatestSourceDefinitions(ctx context.Context) (*op
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -478,7 +468,7 @@ func (s *sourceDefinition) ListLatestSourceDefinitions(ctx context.Context) (*op
 
 // ListPrivateSourceDefinitions - List all private, non-custom sourceDefinitions, and for each indicate whether the given workspace has a grant for using the definition. Used by admins to view and modify a given workspace's grants.
 func (s *sourceDefinition) ListPrivateSourceDefinitions(ctx context.Context, request shared.WorkspaceIDRequestBody) (*operations.ListPrivateSourceDefinitionsResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/source_definitions/list_private"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -491,11 +481,11 @@ func (s *sourceDefinition) ListPrivateSourceDefinitions(ctx context.Context, req
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -537,7 +527,7 @@ func (s *sourceDefinition) ListPrivateSourceDefinitions(ctx context.Context, req
 
 // ListSourceDefinitions - List all the sourceDefinitions the current Airbyte deployment is configured to use
 func (s *sourceDefinition) ListSourceDefinitions(ctx context.Context) (*operations.ListSourceDefinitionsResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/source_definitions/list"
 
 	req, err := http.NewRequestWithContext(ctx, "POST", url, nil)
@@ -545,9 +535,9 @@ func (s *sourceDefinition) ListSourceDefinitions(ctx context.Context) (*operatio
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -589,7 +579,7 @@ func (s *sourceDefinition) ListSourceDefinitions(ctx context.Context) (*operatio
 
 // ListSourceDefinitionsForWorkspace - List all the sourceDefinitions the given workspace is configured to use
 func (s *sourceDefinition) ListSourceDefinitionsForWorkspace(ctx context.Context, request shared.WorkspaceIDRequestBody) (*operations.ListSourceDefinitionsForWorkspaceResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/source_definitions/list_for_workspace"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -602,11 +592,11 @@ func (s *sourceDefinition) ListSourceDefinitionsForWorkspace(ctx context.Context
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -648,7 +638,7 @@ func (s *sourceDefinition) ListSourceDefinitionsForWorkspace(ctx context.Context
 
 // RevokeSourceDefinitionFromWorkspace - revoke a grant to a private, non-custom sourceDefinition from a given workspace
 func (s *sourceDefinition) RevokeSourceDefinitionFromWorkspace(ctx context.Context, request shared.SourceDefinitionIDWithWorkspaceID) (*operations.RevokeSourceDefinitionFromWorkspaceResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/source_definitions/revoke_definition"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -664,11 +654,11 @@ func (s *sourceDefinition) RevokeSourceDefinitionFromWorkspace(ctx context.Conte
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -721,7 +711,7 @@ func (s *sourceDefinition) RevokeSourceDefinitionFromWorkspace(ctx context.Conte
 
 // UpdateSourceDefinition - Update a sourceDefinition
 func (s *sourceDefinition) UpdateSourceDefinition(ctx context.Context, request shared.SourceDefinitionUpdate) (*operations.UpdateSourceDefinitionResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/source_definitions/update"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -734,11 +724,11 @@ func (s *sourceDefinition) UpdateSourceDefinition(ctx context.Context, request s
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

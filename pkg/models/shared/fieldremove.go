@@ -4,5 +4,5 @@ package shared
 
 type FieldRemove struct {
 	// JSONSchema representation of the field
-	Schema map[string]interface{} `json:"schema,omitempty"`
+	Schema *FieldSchema `json:"schema,omitempty"`
 }

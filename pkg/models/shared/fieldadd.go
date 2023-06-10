@@ -4,5 +4,5 @@ package shared
 
 type FieldAdd struct {
 	// JSONSchema representation of the field
-	Schema map[string]interface{} `json:"schema,omitempty"`
+	Schema *FieldSchema `json:"schema,omitempty"`
 }

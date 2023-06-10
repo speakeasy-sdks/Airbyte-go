@@ -17,28 +17,18 @@ import (
 // webBackend - Endpoints for the Airbyte web application. Those APIs should not be called outside the web application implementation and are not
 // guaranteeing any backwards compatibility.
 type webBackend struct {
-	defaultClient  HTTPClient
-	securityClient HTTPClient
-	serverURL      string
-	language       string
-	sdkVersion     string
-	genVersion     string
+	sdkConfiguration sdkConfiguration
 }
 
-func newWebBackend(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *webBackend {
+func newWebBackend(sdkConfig sdkConfiguration) *webBackend {
 	return &webBackend{
-		defaultClient:  defaultClient,
-		securityClient: securityClient,
-		serverURL:      serverURL,
-		language:       language,
-		sdkVersion:     sdkVersion,
-		genVersion:     genVersion,
+		sdkConfiguration: sdkConfig,
 	}
 }
 
 // GetStateType - Fetch the current state type for a connection.
 func (s *webBackend) GetStateType(ctx context.Context, request shared.ConnectionIDRequestBody) (*operations.GetStateTypeResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/web_backend/state/get_type"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -54,11 +44,11 @@ func (s *webBackend) GetStateType(ctx context.Context, request shared.Connection
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -120,7 +110,7 @@ func (s *webBackend) GetStateType(ctx context.Context, request shared.Connection
 
 // WebBackendCheckUpdates - Returns a summary of source and destination definitions that could be updated.
 func (s *webBackend) WebBackendCheckUpdates(ctx context.Context) (*operations.WebBackendCheckUpdatesResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/web_backend/check_updates"
 
 	req, err := http.NewRequestWithContext(ctx, "POST", url, nil)
@@ -128,9 +118,9 @@ func (s *webBackend) WebBackendCheckUpdates(ctx context.Context) (*operations.We
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -172,7 +162,7 @@ func (s *webBackend) WebBackendCheckUpdates(ctx context.Context) (*operations.We
 
 // WebBackendCreateConnection - Create a connection
 func (s *webBackend) WebBackendCreateConnection(ctx context.Context, request shared.WebBackendConnectionCreate) (*operations.WebBackendCreateConnectionResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/web_backend/connections/create"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -188,11 +178,11 @@ func (s *webBackend) WebBackendCreateConnection(ctx context.Context, request sha
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -244,7 +234,7 @@ func (s *webBackend) WebBackendCreateConnection(ctx context.Context, request sha
 
 // WebBackendGetConnection - Get a connection
 func (s *webBackend) WebBackendGetConnection(ctx context.Context, request shared.WebBackendConnectionRequestBody) (*operations.WebBackendGetConnectionResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/web_backend/connections/get"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -260,11 +250,11 @@ func (s *webBackend) WebBackendGetConnection(ctx context.Context, request shared
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -326,7 +316,7 @@ func (s *webBackend) WebBackendGetConnection(ctx context.Context, request shared
 
 // WebBackendGetWorkspaceState - Returns the current state of a workspace
 func (s *webBackend) WebBackendGetWorkspaceState(ctx context.Context, request shared.WebBackendWorkspaceState) (*operations.WebBackendGetWorkspaceStateResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/web_backend/workspace/state"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -339,11 +329,11 @@ func (s *webBackend) WebBackendGetWorkspaceState(ctx context.Context, request sh
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -405,7 +395,7 @@ func (s *webBackend) WebBackendGetWorkspaceState(ctx context.Context, request sh
 
 // WebBackendListConnectionsForWorkspace - Returns all non-deleted connections for a workspace.
 func (s *webBackend) WebBackendListConnectionsForWorkspace(ctx context.Context, request shared.WebBackendConnectionListRequestBody) (*operations.WebBackendListConnectionsForWorkspaceResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/web_backend/connections/list"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -421,11 +411,11 @@ func (s *webBackend) WebBackendListConnectionsForWorkspace(ctx context.Context, 
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0.7, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -492,7 +482,7 @@ func (s *webBackend) WebBackendListConnectionsForWorkspace(ctx context.Context, 
 //
 // Returns all available geographies in which a data sync can run.
 func (s *webBackend) WebBackendListGeographies(ctx context.Context) (*operations.WebBackendListGeographiesResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/web_backend/geographies/list"
 
 	req, err := http.NewRequestWithContext(ctx, "POST", url, nil)
@@ -500,9 +490,9 @@ func (s *webBackend) WebBackendListGeographies(ctx context.Context) (*operations
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -551,7 +541,7 @@ func (s *webBackend) WebBackendListGeographies(ctx context.Context) (*operations
 // with the catalog from the request. This means that to modify a single stream, the entire new catalog
 // containing the updated stream needs to be sent.
 func (s *webBackend) WebBackendUpdateConnection(ctx context.Context, request shared.WebBackendConnectionUpdate) (*operations.WebBackendUpdateConnectionResponse, error) {
-	baseURL := s.serverURL
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/web_backend/connections/update"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
@@ -567,11 +557,11 @@ func (s *webBackend) WebBackendUpdateConnection(ctx context.Context, request sha
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json;q=1, application/json;q=0")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.defaultClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
